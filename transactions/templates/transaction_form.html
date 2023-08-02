@@ -1,1 +1,28 @@
 <h1>transactions</h1>
+
+{% block head_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1 class="">{{ title }}</h1>
+<hr />
+<div class="">
+    <form method="post" class="">
+        {% csrf_token %}
+
+        <div class="mb-4">
+            <label class="" for="amount">
+                Amount
+            </label>
+            <input class="" name="amount" id="amount" type="number" required placeholder="Amount">
+        </div>
+        {% if form.amount.errors %}
+            {% for error in form.amount.errors %}
+                <p class="">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+        <button class="" type="submit">
+            Submit
+        </button>
+    </form>
+</div>
+{% endblock %}

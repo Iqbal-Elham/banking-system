@@ -19,15 +19,15 @@ class UserRegistrationView(TemplateView):
     form_class = UserRegistrationForm
     template_name = 'user_registration.html'
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     if self.request.user.is_authenticated:
-    #         return HttpResponseRedirect(
-    #             reverse_lazy('transactions:transaction_report')
-    #         )
-    #     return super().dispatch(request, *args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return HttpResponseRedirect(
+                reverse_lazy('transactions:transaction_report')
+            )
+        return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        registration_form = UserRegistrationForm(self.request.POST)
+        registration_form = UserRegistrationForm(self.request.POST, self.request.FILES)
         address_form = UserAddressForm(self.request.POST)
 
         if registration_form.is_valid() and address_form.is_valid():
@@ -44,9 +44,9 @@ class UserRegistrationView(TemplateView):
                     f'Your Account Number is {user.account.account_no}. '
                 )
             )
-            # return HttpResponseRedirect(
-            #     reverse_lazy('transactions:deposit_money')
-            # )
+            return HttpResponseRedirect(
+                reverse_lazy('transactions:deposit_money')
+            )
 
         return self.render_to_response(
             self.get_context_data(

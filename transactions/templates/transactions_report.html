@@ -1,1 +1,75 @@
 <h1>Transaction report</h1>
+
+{% block head_title %}Transaction Report{% endblock %}
+
+{% block head_extra %}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+{% endblock %}
+
+{% block content %}
+    <h1 class="">Transaction Report</h1>
+    <hr />
+    <form method="get">
+        <div class="">
+            <input type="search" name="daterange" id="search" placeholder="Filter using date range" value="{{ request.GET.daterange }}" class="" />
+            <button type="submit" class="">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
+                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </button>
+        </div>
+        {% if form.daterange.errors %}
+            {% for error in form.daterange.errors %}
+                <p class="">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+    </form>
+    <table class="">
+        <thead class="">
+        <tr class="">
+            <th class="">Transaction Type</th>
+            <th class="">Date</th>
+            <th class="">Amount</th>
+            <th class="">Balance After Transaction</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for transaction in object_list %}
+        <tr class="{% cycle 'bg-gray-300' 'bg-white-100' %}">
+            <td class="">{{ transaction.get_transaction_type_display }}</td>
+            <td class="">{{ transaction.timestamp }}</td>
+            <td class="">afg {{ transaction.amount }}</td>
+            <td class="">afg {{ transaction.balance_after_transaction }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="">
+            <th class="" colspan="3">Final Balance</th>
+            <th class="">afg {{ account.balance }}</th>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block footer_extra %}
+    <script type="text/javascript">
+        $(function () {
+            $('input[name="daterange"]').daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: "Clear",
+                },
+            });
+
+            $('input[name="daterange"]').on("apply.daterangepicker", function (ev, picker) {
+                $(this).val(picker.startDate.format("YYYY-MM-DD") + " - " + picker.endDate.format("YYYY-MM-DD"));
+            });
+
+            $('input[name="daterange"]').on("cancel.daterangepicker", function (ev, picker) {
+                $(this).val("");
+            });
+        });
+    </script>
+{% endblock %}

@@ -2,7 +2,7 @@
 from django import forms
 from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
-# from django.db import transaction
+from django.db import transaction
 
 from .models import User, BankAccountType, UserBankAccount, UserAddress
 from .constants import GENDER_CHOICE
@@ -43,6 +43,7 @@ class UserRegistrationForm(UserCreationForm):
         fields = [
             'first_name',
             'last_name',
+            'profile_photo',
             'email',
             'password1',
             'password2',
@@ -58,7 +59,7 @@ class UserRegistrationForm(UserCreationForm):
                 )
             })
 
-    # @transaction.atomic
+    @transaction.atomic
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
