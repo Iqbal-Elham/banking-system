@@ -17,14 +17,14 @@ User = get_user_model()
 class UserRegistrationView(TemplateView):
     model = User
     form_class = UserRegistrationForm
-    template_name = 'accounts/user_registration.html'
+    template_name = 'user_registration.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            return HttpResponseRedirect(
-                reverse_lazy('transactions:transaction_report')
-            )
-        return super().dispatch(request, *args, **kwargs)
+    # def dispatch(self, request, *args, **kwargs):
+    #     if self.request.user.is_authenticated:
+    #         return HttpResponseRedirect(
+    #             reverse_lazy('transactions:transaction_report')
+    #         )
+    #     return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         registration_form = UserRegistrationForm(self.request.POST)
@@ -44,9 +44,9 @@ class UserRegistrationView(TemplateView):
                     f'Your Account Number is {user.account.account_no}. '
                 )
             )
-            return HttpResponseRedirect(
-                reverse_lazy('transactions:deposit_money')
-            )
+            # return HttpResponseRedirect(
+            #     reverse_lazy('transactions:deposit_money')
+            # )
 
         return self.render_to_response(
             self.get_context_data(
@@ -65,12 +65,12 @@ class UserRegistrationView(TemplateView):
 
 
 class UserLoginView(LoginView):
-    template_name='accounts/user_login.html'
+    template_name='user_login.html'
     redirect_authenticated_user = True
 
 
 class LogoutView(RedirectView):
-    pattern_name = 'home'
+    pattern_name = ''
 
     def get_redirect_url(self, *args, **kwargs):
         if self.request.user.is_authenticated:
