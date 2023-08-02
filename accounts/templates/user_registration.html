@@ -49,6 +49,17 @@
                 {% endfor %}
             {% endif %}
         </div>
+        <div class="">
+            <label class="" for="{{ registration_form.profile_photo.id_for_label }}">
+                {{ registration_form.profile_photo.label }}
+            </label>
+            {{ registration_form.profile_photo }}
+            {% if registration_form.profile_photo.errors %}
+                {% for error in registration_form.profile_photo.errors %}
+                    <p class="">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
     <div class="">
         <div class="">
