@@ -1,5 +1,8 @@
-
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}Sign In{% endblock %}
 {% block content %}
+<div class="box">
 {% if form.non_field_errors %}
     {% for error in form.non_field_errors %}
         <div class="" role="alert">
@@ -8,9 +11,7 @@
         </div>
     {% endfor %}
 {% endif %}
-<h1 class="">Sign In</h1>
-<hr>
-<div class="">
+<h1 class="title">Sign In</h1>
     <form method="post" class="">
         {% csrf_token %}
         {% for hidden_field in form.hidden_fields %}
@@ -18,11 +19,9 @@
             {{ hidden_field }}
         {% endfor %}
         {% for field in form.visible_fields %}
-        <div class="mb-4">
-            <label class="" for="{{ field.id_for_label }}">
-                {{ field.label }}
-            </label>
-            <input class="" name="{{ field.name }}" id="{{ field.id_for_label }}" type="{{ field.widget_type }}">
+        <div class="mb-1">
+            <input class="log-input" name="{{ field.name }}" id="{{ field.id_for_label }}" type="{{ field.widget_type }}" placeholder="{{ field.label }}">
+            <span class="input-border"></span>
         </div>
             {% if field.errors %}
                 {% for error in field.errors %}
@@ -31,12 +30,14 @@
             {% endif %}
         {% endfor %}
 
-        <div class="">
-            <button class="" type="submit">
+            <button class="log-btn" type="submit">
                 Sign In
             </button>
-        </div>
     </form>
+    <p>Don't have an account?</p>
+    <a class="signup-btn text-center m-0 p-1" href="">
+        signup
+    </a>
 </div>
 {% endblock %}
 

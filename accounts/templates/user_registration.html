@@ -1,5 +1,8 @@
-<h1>Registeration</h1>
-
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+<div class="box">
 {% if registration_form.non_field_errors %}
 {% for error in registration_form.non_field_errors %}
 <div class="" role="alert">
@@ -17,9 +20,7 @@
 {% endfor %}
 {% endif %}
 
-<h1 class="">Register</h1>
-<hr />
-<div class="">
+<h1 class="title">Register</h1>
 <form method="post" class="" enctype="multipart/form-data">
     {% csrf_token %}
     {% for hidden_field in registration_form.hidden_fields %}
@@ -190,3 +191,4 @@
     </div>
 </form>
 </div>
+{% endblock %}
