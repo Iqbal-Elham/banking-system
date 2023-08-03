@@ -191,6 +191,7 @@
                 0 0 30px #ae00ff,
                 0 0 70px #ae00ff;
   }
+  
 .signup-btn {
     width: 88%;
     text-align: center;
@@ -208,15 +209,15 @@
     user-select: none;
   }
 
- .signup-btn:hover {
-    color: #ffffff;
-    background: #ffa600;
-    border: 1px solid #ffa600;
-    text-shadow: 0 0 5px #ffffff,
-                0 0 10px #ffffff,
-                0 0 20px #ffffff;
-    box-shadow: 0 0 5px #ffa600,
-                0 0 10px #ffa600,
-                0 0 30px #ffa600,
-                0 0 70px #ffa600;
-  }
+.signup-btn:hover {
+color: #ffffff;
+background: #ffa600;
+border: 1px solid #ffa600;
+text-shadow: 0 0 5px #ffffff,
+            0 0 10px #ffffff,
+            0 0 20px #ffffff;
+box-shadow: 0 0 5px #ffa600,
+            0 0 10px #ffa600,
+            0 0 30px #ffa600,
+            0 0 70px #ffa600;
+}
