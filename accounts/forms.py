@@ -26,8 +26,8 @@ class UserAddressForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': (
                     'login-fields'
-                    ''
-                )
+                ),
+                'placeholder': self.fields[field].label
             })
 
 
@@ -56,7 +56,8 @@ class UserRegistrationForm(UserCreationForm):
             self.fields[field].widget.attrs.update({
                 'class': (
                     'register-field'
-                )
+                ),
+                'placeholder': self.fields[field].label
             })
 
     @transaction.atomic

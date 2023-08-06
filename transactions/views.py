@@ -16,7 +16,7 @@ from transactions.models import Transaction
 
 
 class TransactionRepostView(LoginRequiredMixin, ListView):
-    template_name = 'transactions_report.html'
+    template_name = 'transactions/transactions_report.html'
     model = Transaction
     form_data = {}
 
@@ -50,7 +50,7 @@ class TransactionRepostView(LoginRequiredMixin, ListView):
 
 
 class TransactionCreateMixin(LoginRequiredMixin, CreateView):
-    template_name = 'transaction_form.html'
+    template_name = 'transactions/transactions_form.html'
     model = Transaction
     title = ''
     success_url = reverse_lazy('transactions:transaction_report')

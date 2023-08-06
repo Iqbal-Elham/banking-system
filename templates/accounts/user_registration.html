@@ -1,0 +1,307 @@
+{% extends 'accounts/_base.html' %}
+{% load static %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+
+<div class="box">
+    
+    {% if registration_form.non_field_errors %}
+    {% for error in registration_form.non_field_errors %}
+    <div class="" role="alert">
+        <p class="">Error!</p>
+        <p class="">{{ error }}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% if address_form.non_field_errors %}
+    {% for error in address_form.non_field_errors %}
+    <div class="" role="alert">
+        <p class="">Error!</p>
+        <p class="">{{ error }}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
+    
+    <h1 class="title">Register</h1>
+    <form method="post" class="" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for hidden_field in registration_form.hidden_fields %}
+            {{ hidden_field.errors }}
+            {{ hidden_field }}
+        {% endfor %}
+        <div class="">
+            <div class="">
+                {{ registration_form.first_name }}
+                {% if registration_form.first_name.errors %}
+                    {% for error in registration_form.first_name.errors %}
+                        <p class="">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="">
+                {{ registration_form.last_name }}
+                {% if registration_form.last_name.errors %}
+                    {% for error in registration_form.last_name.errors %}
+                        <p class="">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="">
+                {{ registration_form.profile_photo }}
+                {% if registration_form.profile_photo.errors %}
+                    {% for error in registration_form.profile_photo.errors %}
+                        <p class="">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="">
+            <div class="">
+                {{ registration_form.email }}
+                {% if registration_form.email.errors %}
+                    {% for error in registration_form.email.errors %}
+                        <p class="">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="">
+                {{ registration_form.account_type }}
+                {% if registration_form.account_type.errors %}
+                    {% for error in registration_form.account_type.errors %}
+                    <p class="">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="">
+            <div class="">
+                {{ registration_form.gender }}
+                {% if registration_form.gender.errors %}
+                    {% for error in registration_form.gender.errors %}
+                        <p class="">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="">
+                {{ registration_form.birth_date }}
+                {% if registration_form.birth_date.errors %}
+                    {% for error in registration_form.birth_date.errors %}
+                    <p class="">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="">
+            <div class="">
+                {{ registration_form.password1 }}
+                {% if registration_form.password1.errors %}
+                    {% for error in registration_form.password1.errors %}
+                        <p class="">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="">
+                {{ registration_form.password2 }}
+                    {% if registration_form.password2.errors %}
+                    {% for error in registration_form.password2.errors %}
+                        <p class="">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    
+        {% for hidden_field in address_form.hidden_fields %} {{ hidden_field.errors }} {{ hidden_field }} {% endfor %}
+        <div class="">
+            <div class="">
+                {{ address_form.street_address }}
+                {% if address_form.street_address.errors %}
+                    {% for error in address_form.street_address.errors %}
+                        <p class="">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="">
+                {{ address_form.city }}
+                {% if address_form.city.errors %}
+                    {% for error in address_form.city.errors %}
+                        <p class="">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="">
+            <div class="">
+                {{ address_form.postal_code }}
+                {% if address_form.postal_code.errors %}
+                    {% for error in address_form.postal_code.errors %}
+                        <p class="">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="">
+                {{ address_form.country }}
+                {% if address_form.country.errors %}
+                    {% for error in address_form.country.errors %}
+                        <p class="">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="">
+            <button class="" type="submit">
+                Register
+            </button>
+        </div>
+    </form>
+    </div>
+<div class="box">
+{% if registration_form.non_field_errors %}
+{% for error in registration_form.non_field_errors %}
+<div class="" role="alert">
+    <p class="">Error!</p>
+    <p class="">{{ error }}</p>
+</div>
+{% endfor %}
+{% endif %}
+{% if address_form.non_field_errors %}
+{% for error in address_form.non_field_errors %}
+<div class="" role="alert">
+    <p class="">Error!</p>
+    <p class="">{{ error }}</p>
+</div>
+{% endfor %}
+{% endif %}
+
+<h1 class="title">Register</h1>
+<form method="post" class="" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for hidden_field in registration_form.hidden_fields %}
+        {{ hidden_field.errors }}
+        {{ hidden_field }}
+    {% endfor %}
+    <div class="">
+        <div class="">
+            {{ registration_form.first_name }}
+            {% if registration_form.first_name.errors %}
+                {% for error in registration_form.first_name.errors %}
+                    <p class="">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="">
+            {{ registration_form.last_name }}
+            {% if registration_form.last_name.errors %}
+                {% for error in registration_form.last_name.errors %}
+                    <p class="">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="">
+            {{ registration_form.profile_photo }}
+            {% if registration_form.profile_photo.errors %}
+                {% for error in registration_form.profile_photo.errors %}
+                    <p class="">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="">
+        <div class="">
+            {{ registration_form.email }}
+            {% if registration_form.email.errors %}
+                {% for error in registration_form.email.errors %}
+                    <p class="">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="">
+            {{ registration_form.account_type }}
+            {% if registration_form.account_type.errors %}
+                {% for error in registration_form.account_type.errors %}
+                <p class="">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="">
+        <div class="">
+            {{ registration_form.gender }}
+            {% if registration_form.gender.errors %}
+                {% for error in registration_form.gender.errors %}
+                    <p class="">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="">
+            {{ registration_form.birth_date }}
+            {% if registration_form.birth_date.errors %}
+                {% for error in registration_form.birth_date.errors %}
+                <p class="">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="">
+        <div class="">
+            {{ registration_form.password1 }}
+            {% if registration_form.password1.errors %}
+                {% for error in registration_form.password1.errors %}
+                    <p class="">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="">
+            {{ registration_form.password2 }}
+                {% if registration_form.password2.errors %}
+                {% for error in registration_form.password2.errors %}
+                    <p class="">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    {% for hidden_field in address_form.hidden_fields %} {{ hidden_field.errors }} {{ hidden_field }} {% endfor %}
+    <div class="">
+        <div class="">
+            {{ address_form.street_address }}
+            {% if address_form.street_address.errors %}
+                {% for error in address_form.street_address.errors %}
+                    <p class="">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="">
+            {{ address_form.city }}
+            {% if address_form.city.errors %}
+                {% for error in address_form.city.errors %}
+                    <p class="">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="">
+        <div class="">
+            {{ address_form.postal_code }}
+            {% if address_form.postal_code.errors %}
+                {% for error in address_form.postal_code.errors %}
+                    <p class="">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="">
+            {{ address_form.country }}
+            {% if address_form.country.errors %}
+                {% for error in address_form.country.errors %}
+                    <p class="">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="">
+        <button class="" type="submit">
+            Register
+        </button>
+    </div>
+</form>
+</div>
+{% endblock %}
