@@ -25,7 +25,7 @@ class UserAddressForm(forms.ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs.update({
                 'class': (
-                    'login-fields'
+                    'form-control'
                 ),
                 'placeholder': self.fields[field].label
             })
@@ -55,7 +55,7 @@ class UserRegistrationForm(UserCreationForm):
         for field in self.fields:
             self.fields[field].widget.attrs.update({
                 'class': (
-                    'register-field'
+                    'form-control'
                 ),
                 'placeholder': self.fields[field].label
             })
