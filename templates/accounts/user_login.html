@@ -1,8 +1,8 @@
-{% extends 'accounts/_base.html' %}
+{% extends 'accounts/home.html' %}
 {% load static %}
 {% block title %}Sign In{% endblock %}
 {% block content %}
-<div class="box">
+<div class="page-content">
 {% if form.non_field_errors %}
     {% for error in form.non_field_errors %}
         <div class="" role="alert">
@@ -11,16 +11,17 @@
         </div>
     {% endfor %}
 {% endif %}
-<h1 class="title">Sign In</h1>
-    <form method="post" class="">
+<div clsas="login-container">
+    <h1 class="title">Sign In</h1>
+    <form method="post" class="login-form" id="myform">
         {% csrf_token %}
         {% for hidden_field in form.hidden_fields %}
             {{ hidden_field.errors }}
             {{ hidden_field }}
         {% endfor %}
         {% for field in form.visible_fields %}
-        <div class="mb-1">
-            <input class="log-input" name="{{ field.name }}" id="{{ field.id_for_label }}" type="{{ field.widget_type }}" placeholder="{{ field.label }}">
+        <div class="form-right bg-dark">
+            <input class="form-control" name="{{ field.name }}" id="{{ field.id_for_label }}" type="{{ field.widget_type }}" placeholder="{{ field.label }}">
             <span class="input-border"></span>
         </div>
             {% if field.errors %}
@@ -35,7 +36,7 @@
             </button>
     </form>
     <p>Don't have an account?</p>
-    <a class="signup-btn text-center m-0 p-1" href="">
+    <a class="signup-btn text-center m-0 p-1" href="/accounts/register">
         signup
     </a>
 </div>
