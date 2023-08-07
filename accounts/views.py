@@ -17,7 +17,7 @@ User = get_user_model()
 class UserRegistrationView(TemplateView):
     model = User
     form_class = UserRegistrationForm
-    template_name = 'user_registration.html'
+    template_name = 'accounts/user_registration.html'
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
@@ -65,7 +65,7 @@ class UserRegistrationView(TemplateView):
 
 
 class UserLoginView(LoginView):
-    template_name='user_login.html'
+    template_name='accounts/user_login.html'
     redirect_authenticated_user = True
 
 
