@@ -1,28 +1,29 @@
 {% extends 'core/_main_layout.html' %}
-{% block head_title %}{{ title }}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<h1>transactions</h1>
 <h1 class="">{{ title }}</h1>
 <hr />
 <div class="">
-    <form method="post" class="">
+    <form method="post" class="w-50">
         {% csrf_token %}
 
         <div class="mb-4">
-            <label class="" for="amount">
-                Amount
+            <label class="mb-3 mx-2" for="amount">
+                Amount Of Money
             </label>
-            <input class="" name="amount" id="amount" type="number" required placeholder="Amount">
+            <input class="form-control" name="amount" id="amount" type="number" required placeholder="Amount">
         </div>
         {% if form.amount.errors %}
             {% for error in form.amount.errors %}
                 <p class="">{{ error }}</p>
             {% endfor %}
         {% endif %}
-        <button class="" type="submit">
-            Submit
-        </button>
+        <div class="w-100 d-flex justify-content-end">
+            <button class="action-btn" type="submit">
+                Submit
+            </button>
+        </div>
     </form>
 </div>
 {% endblock %}
