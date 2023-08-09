@@ -20,8 +20,8 @@
         {% endfor %}
         {% endif %}
 
-    <div class="form-v10-content">
-        <form class="form-detail" action="#" method="post" id="myform">
+    <div class="form-content">
+        <form class="form-detail" action="#" method="post" id="myform" enctype="multipart/form-data">
             {% csrf_token %}
             {% for hidden_field in registration_form.hidden_fields %}
             {{ hidden_field.errors }}

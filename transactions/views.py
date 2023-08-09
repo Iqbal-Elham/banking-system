@@ -1,19 +1,22 @@
 from dateutil.relativedelta import relativedelta
+from django.http import HttpResponse
 
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView, ListView
 
-from transactions.constants import DEPOSIT, WITHDRAWAL
+from transactions.constants import DEPOSIT, WITHDRAWAL, TRANSFER, RECEIVER
 from transactions.forms import (
     DepositForm,
     TransactionDateRangeForm,
     WithdrawForm,
 )
-from transactions.models import Transaction
-
+from transactions.models import Transaction, TransferMoney
+from accounts.models import UserBankAccount
+from .forms import TransferForm
 
 class TransactionRepostView(LoginRequiredMixin, ListView):
     template_name = 'transactions/transactions_report.html'
@@ -57,6 +60,7 @@ class TransactionCreateMixin(LoginRequiredMixin, CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        print(kwargs)
         kwargs.update({
             'account': self.request.user.account
         })
@@ -64,6 +68,7 @@ class TransactionCreateMixin(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        print(context)
         context.update({
             'title': self.title
         })
@@ -134,3 +139,51 @@ class WithdrawMoneyView(TransactionCreateMixin):
         )
 
         return super().form_valid(form)
+    
+
+def TransferMoneyView(request):
+    initial = {'transaction_type': TRANSFER}
+
+    
+
+    if request.method == 'POST':
+        form = TransferForm(request.POST)
+        if form.is_valid():
+            recipient_account_number = form.cleaned_data['recipient_account_number']
+            recipient_name = form.cleaned_data['recipient_name']
+            amount = form.cleaned_data['amount']
+
+            try:
+                sender_account = UserBankAccount.objects.get(user=request.user)
+                recipient_account = UserBankAccount.objects.get(account_no=recipient_account_number)
+            except UserBankAccount.DoesNotExist:
+                return HttpResponse("Account not found.")
+            if sender_account.balance >= amount:
+                sender_account.balance -= amount
+                recipient_account.balance += amount
+
+                Transaction.objects.create(
+                    account=sender_account,
+                    amount=amount,
+                    balance_after_transaction=sender_account.balance, 
+                    transaction_type=TRANSFER
+                    )
+                Transaction.objects.create(
+                    account=recipient_account,
+                    amount=amount,
+                    balance_after_transaction=recipient_account.balance, 
+                    transaction_type=RECEIVER
+                    )
+
+
+                sender_account.save(update_fields=['balance'])
+                recipient_account.save(update_fields=['balance'])
+
+                TransferMoney.objects.create(sender=sender_account, recipient=recipient_account, amount=amount)
+
+                return redirect('transactions:transaction_report')
+    else:
+        form = TransferForm()
+
+    return render(request, 'transactions/transfer.html', {'form': form})
+
