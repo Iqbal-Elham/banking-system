@@ -9,10 +9,10 @@
         {% csrf_token %}
 
         <div class="mb-4">
-            <label class="mb-3 mx-2" for="amount">
+            <label class="mb-3 mx-2 h4" for="amount">
                 Amount Of Money
             </label>
-            <input class="form-control" name="amount" id="amount" type="number" required placeholder="Amount">
+            <input class="amount-input" name="amount" id="amount" type="number" required placeholder="Amount">
         </div>
         {% if form.amount.errors %}
             {% for error in form.amount.errors %}

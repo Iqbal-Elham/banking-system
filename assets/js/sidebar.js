@@ -6,6 +6,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     bodypd = document.getElementById(bodyId),
     headerpd = document.getElementById(headerId)
     
+    nav.classList.add('show')
+    bodypd.classList.add('body-pd')
+    toggle.classList.add('bx-x')
+    // add padding to header
+    headerpd.classList.add('body-pd')
     // Validate that all variables exist
     if(toggle && nav && bodypd && headerpd){
     toggle.addEventListener('click', ()=>{

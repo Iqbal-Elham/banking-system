@@ -36,8 +36,7 @@ a {
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
-  background: rgb(109,213,237);
-  background: linear-gradient(0deg, rgba(109,213,237,1) 0%, rgba(33,147,176,1) 48%);
+  background: linear-gradient(180deg, rgba(51,0,64,1) 0%, rgba(93,0,112,1) 66%);
   z-index: var(--z-fixed);
   transition: 0.5s;
 }
@@ -63,8 +62,7 @@ a {
   left: -30%;
   width: var(--nav-width);
   height: 100vh;
-  background: rgb(109,213,237);
-  background: linear-gradient(0deg, rgba(109,213,237,1) 0%, rgba(33,147,176,1) 48%);
+  background: linear-gradient(180deg, rgba(51,0,64,1) 0%, rgba(93,0,112,1) 66%);
   padding: 0.5rem 1rem 0 0;
   transition: 0.5s;
   z-index: var(--z-fixed);
@@ -89,18 +87,15 @@ a {
 }
 .nav_logo-icon {
   font-size: 1.25rem;
-  color: rgb(12, 11, 11);
-  /* color: var(--white-color); */
+  color: var(--white-color);
 }
 .nav_logo-name {
-  color: rgb(12, 11, 11);
-  /* color: var(--white-color); */
+  color: var(--white-color);
   font-weight: 700;
 }
 .nav_link {
   position: relative;
-  /* color: var(--first-color-light); */
-  color: rgb(12, 11, 11);
+  color: var(--first-color-light);
   margin-bottom: 1.5rem;
   transition: 0.3s;
 }
@@ -189,7 +184,7 @@ a {
 .search-btn {
   width: 120px;
   height: 45px;
-  border: 2px solid #315cfd;
+  border: 2px solid #3498db;
   border-radius: 8px;
   transition: all 0.3s;
   cursor: pointer;
@@ -199,7 +194,7 @@ a {
   font-family: 'Montserrat', sans-serif;
 }
 .search-btn:hover {
-  background: #315cfd;
+  background: #3498db;
   color: white;
   font-size: 1em;
 }
@@ -263,4 +258,23 @@ a {
 .action-btn:hover::after {
   transform: scaleX(1.2) scaleY(1.4);
   opacity: 0;
+}
+
+.amount-input {
+  width: 100%;
+  padding: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  outline: none;
+  background: #e8e8e8;
+  box-shadow: 5px 5px 17px #c8c8c8,
+             -5px -5px 17px #ffffff;
+  border: none;
+  border-radius: 10px;
+  transition: all .5s;
+}
+
+.amount-input:focus {
+  background: #e8e8e8;
+  box-shadow: inset 5px 5px 17px #c8c8c8,
+            inset -5px -5px 17px #ffffff;
 }
