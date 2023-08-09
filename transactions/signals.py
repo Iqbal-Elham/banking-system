@@ -25,12 +25,18 @@ def send_transaction_email(sender, instance, created, **kwargs):
                 recipient_list = [instance.account.user.email]  # Sender's email
 
                 send_mail(subject, message, from_email, recipient_list)
+            except TransferMoney.DoesNotExist:
+                pass
+        elif instance.transaction_type == RECEIVER:
+            try:
+                transfer = TransferMoney.objects.get(recipient=instance.account)
+                sender_account = transfer.sender
 
-                receiver_subject = 'Received Money Notification'
-                receiver_message = f'You have received ${instance.amount} in a transfer from {instance.account.user.username}.'
-                receiver_recipient_list = [recipient_account.user.email]  # Receiver's email
+                subject = 'Received Money Notification'
+                message = f'You have received ${instance.amount} from another account.'
+                recipient_list = [instance.account.user.email]  # Receiver's email
 
-                send_mail(receiver_subject, receiver_message, from_email, receiver_recipient_list)
+                send_mail(subject, message, from_email, recipient_list)
             except TransferMoney.DoesNotExist:
                 pass
 
@@ -44,4 +50,4 @@ def send_transaction_email(sender, instance, created, **kwargs):
         #     recipient_list = [instance.receiver.user.email]  # Receiver's email
 
 
-        send_mail(receiver_subject, receiver_message, from_email, receiver_recipient_list)
+        # send_mail(receiver_subject, receiver_message, from_email, receiver_recipient_list)

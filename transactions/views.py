@@ -153,18 +153,18 @@ def TransferMoneyView(request):
                 sender_account.balance -= amount
                 recipient_account.balance += amount
 
-                # Transaction.objects.create(
-                #     account=sender_account,
-                #     amount=amount,
-                #     balance_after_transaction=sender_account.balance, 
-                #     transaction_type=TRANSFER
-                #     )
-                # Transaction.objects.create(
-                #     account=recipient_account,
-                #     amount=amount,
-                #     balance_after_transaction=recipient_account.balance, 
-                #     transaction_type=RECEIVER
-                #     )
+                Transaction.objects.create(
+                    account=sender_account,
+                    amount=amount,
+                    balance_after_transaction=sender_account.balance, 
+                    transaction_type=TRANSFER
+                    )
+                Transaction.objects.create(
+                    account=recipient_account,
+                    amount=amount,
+                    balance_after_transaction=recipient_account.balance, 
+                    transaction_type=RECEIVER
+                    )
 
 
                 sender_account.save(update_fields=['balance'])
