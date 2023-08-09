@@ -155,4 +155,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'iqbal.ilham.77@gmail.com'
-EMAIL_HOST_PASSWORD = 'kabul a2406'
+EMAIL_HOST_PASSWORD = 'edszszeqntzjatbm'
