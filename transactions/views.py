@@ -127,6 +127,7 @@ class WithdrawMoneyView(TransactionCreateMixin):
         self.request.user.account.balance -= form.cleaned_data.get('amount')
         self.request.user.account.save(update_fields=['balance'])
 
+
         messages.success(
             self.request,
             f'Successfully withdrawn {amount}$ from your account'
@@ -149,6 +150,7 @@ def TransferMoneyView(request):
                 recipient_account = UserBankAccount.objects.get(account_no=recipient_account_number)
             except UserBankAccount.DoesNotExist:
                 return HttpResponse("Account not found.")
+
             if sender_account.balance >= amount:
                 sender_account.balance -= amount
                 recipient_account.balance += amount
@@ -159,6 +161,7 @@ def TransferMoneyView(request):
                     balance_after_transaction=sender_account.balance, 
                     transaction_type=TRANSFER
                     )
+
                 Transaction.objects.create(
                     account=recipient_account,
                     amount=amount,
@@ -166,10 +169,9 @@ def TransferMoneyView(request):
                     transaction_type=RECEIVER
                     )
 
-
-                sender_account.save(update_fields=['balance'])
-                recipient_account.save(update_fields=['balance'])
-
+                sender_account.save()
+                recipient_account.save()
+                
                  # Send email to sender
                 sender_subject = 'Transfer Notification'
                 sender_message = f'You have transferred ${amount} to {recipient_name}\'s account.'

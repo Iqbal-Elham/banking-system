@@ -70,7 +70,7 @@ class UserLoginView(LoginView):
 
 
 class LogoutView(RedirectView):
-    pattern_name = ''
+    pattern_name = 'accounts:user_login'
 
     def get_redirect_url(self, *args, **kwargs):
         if self.request.user.is_authenticated:

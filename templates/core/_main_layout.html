@@ -38,23 +38,19 @@
             <span class="nav_logo-name">Banker</span>
           </a>
           <div class="nav_list">
-            <a href="#" class="nav_link active">
-              <i class="bx bx-grid-alt nav_icon"></i>
-              <span class="nav_name">Notifications</span>
-            </a>
-            <a href="/transactions/deposit/" class="nav_link">
+            <a href="{% url 'transactions:deposit_money' %}" class="nav_link">
               <i class="bx bx-user nav_icon"></i>
               <span class="nav_name">Deposit</span>
             </a>
-            <a href="/transactions/withdraw/" class="nav_link">
+            <a href="{% url 'transactions:withdraw_money' %}" class="nav_link">
               <i class="bx bx-message-square-detail nav_icon"></i>
               <span class="nav_name">Withdraw</span>
             </a>
-            <a href="#" class="nav_link">
+            <a href="{% url 'transactions:transfer_money' %}" class="nav_link">
               <i class="bx bx-bookmark nav_icon"></i>
               <span class="nav_name">Transfer</span>
             </a>
-            <a href="/transactions/report/" class="nav_link">
+            <a href="{% url 'transactions:transaction_report' %}" class="nav_link">
               <i class="bx bx-folder nav_icon"></i>
               <span class="nav_name">Transactions</span>
             </a>

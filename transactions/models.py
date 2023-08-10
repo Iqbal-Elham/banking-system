@@ -22,7 +22,7 @@ class Transaction(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.account.account_no)
+        return f'{self.account}'
 
     class Meta:
         ordering = ['timestamp']
@@ -32,3 +32,7 @@ class TransferMoney(models.Model):
     recipient = models.ForeignKey(UserBankAccount, on_delete=models.CASCADE, related_name='received_transactions')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return f'from ({self.sender}) - ({self.recipient})'
