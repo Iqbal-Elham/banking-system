@@ -82,6 +82,7 @@ class UserBankAccount(models.Model):
     account_no = models.PositiveIntegerField(unique=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICE)
     birth_date = models.DateField(null=True, blank=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
     balance = models.DecimalField(
         default=0,
         max_digits=12,
@@ -96,7 +97,7 @@ class UserBankAccount(models.Model):
     initial_deposit_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return str(self.account_no)
+        return f'{self.user.email} - {self.account_no}'
 
     # def get_interest_calculation_months(self):
     #     """

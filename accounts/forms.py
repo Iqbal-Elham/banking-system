@@ -37,6 +37,11 @@ class UserRegistrationForm(UserCreationForm):
     )
     gender = forms.ChoiceField(choices=GENDER_CHOICE)
     birth_date = forms.DateField()
+    phone_number = forms.CharField(max_length=20, label="e.g +93 XXXXXXXXX", widget=forms.TextInput(
+         attrs={
+                'data-mask': '(+00) 000-000-0000'
+                }
+    ))
 
     class Meta:
         model = User
@@ -68,6 +73,7 @@ class UserRegistrationForm(UserCreationForm):
             user.save()
             account_type = self.cleaned_data.get('account_type')
             gender = self.cleaned_data.get('gender')
+            phone_number = self.cleaned_data.get('phone_number')
             birth_date = self.cleaned_data.get('birth_date')
 
             UserBankAccount.objects.create(
@@ -75,6 +81,7 @@ class UserRegistrationForm(UserCreationForm):
                 gender=gender,
                 birth_date=birth_date,
                 account_type=account_type,
+                phone_number=phone_number,
                 account_no=(
                     user.id +
                     settings.ACCOUNT_NUMBER_START_FROM
