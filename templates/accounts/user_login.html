@@ -11,16 +11,16 @@
         </div>
     {% endfor %}
 {% endif %}
-<div clsas="login-container">
-    <h1 class="title">Sign In</h1>
-    <form method="post" class="login-form" id="myform">
+<div class="login-cc">
+    <h1 class="title mb-5">Sign In</h1>
+    <form method="post" class="login-form w-100 d-flex flex-column gap-4 justify-content-center align-items-center mb-4" id="myform">
         {% csrf_token %}
         {% for hidden_field in form.hidden_fields %}
             {{ hidden_field.errors }}
             {{ hidden_field }}
         {% endfor %}
         {% for field in form.visible_fields %}
-        <div class="form-right bg-dark">
+        <div class="w-100">
             <input class="form-control" name="{{ field.name }}" id="{{ field.id_for_label }}" type="{{ field.widget_type }}" placeholder="{{ field.label }}">
             <span class="input-border"></span>
         </div>
@@ -31,14 +31,12 @@
             {% endif %}
         {% endfor %}
 
-            <button class="log-btn" type="submit">
+            <button class="login-btn" type="submit">
                 Sign In
             </button>
     </form>
-    <p>Don't have an account?</p>
-    <a class="signup-btn text-center m-0 p-1" href="/accounts/register">
-        signup
-    </a>
+    <p>Don't have an account? </p>
+    <a class="signup-btn" href="/accounts/register"> Sign up</a>
 </div>
 {% endblock %}
 
