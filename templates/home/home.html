@@ -1,0 +1,69 @@
+{% extends 'home/_base.html' %} {% load static %} 
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="home-container">
+  <a class="items">
+    <lord-icon
+    src="https://cdn.lordicon.com/cjyxqyly.json"
+    trigger="hover"
+    colors="primary:#242424,secondary:#5f3568,tertiary:#f9c9c0"
+    class="icons">
+    </lord-icon>
+    <p>Account</p>
+  </a>
+  <a class="items" href="{% url 'transactions:transaction_report' %}">
+    <lord-icon
+    src="https://cdn.lordicon.com/oegrrprk.json"
+    trigger="hover"
+    colors="primary:#5f3568,secondary:#ffc738,tertiary:#646e78,quaternary:#121331"
+    class="icons">
+    </lord-icon>
+    <p>Transactions</p>
+  </a>
+  <a class="items" href="{% url 'transactions:transfer_money' %}">
+    <lord-icon
+    src="https://cdn.lordicon.com/iepbfivp.json"
+    trigger="hover"
+    colors="primary:#121331,secondary:#5f3568,tertiary:#ebe6ef"
+    class="icons">
+    </lord-icon>
+    <p>Transfer Money</p>
+  </a>
+  <a class="items" href="{% url 'transactions:deposit_money' %}">
+    <lord-icon
+    src="https://cdn.lordicon.com/qnlcdeqi.json"
+    trigger="hover"
+    colors="primary:#ffffff,secondary:#5f3568,tertiary:#ffc738"
+    class="icons">
+    </lord-icon>
+    <p>Deposit Money</p>
+  </a>
+  <a class="items" href="{% url 'transactions:withdraw_money' %}">
+    <lord-icon
+    src="https://cdn.lordicon.com/hcowevpv.json"
+    trigger="hover"
+    colors="primary:#ebe6ef,secondary:#5f3568"
+    class="icons">
+    </lord-icon>
+    <p>Withdraw Money</p>
+  </a>
+  <a class="items">
+    <lord-icon
+    src="https://cdn.lordicon.com/flvisirw.json"
+    trigger="hover"
+    colors="primary:#5f3568,secondary:#e4e4e4,tertiary:#e8b730"
+    class="icons">
+    </lord-icon>
+    <p>Contact Admin</p>
+  </a>
+  <a class="items" href="{% url 'accounts:user_logout' %}">
+    <lord-icon
+    src="https://cdn.lordicon.com/bnylezcu.json"
+    trigger="hover"
+    colors="primary:#ebe6ef,secondary:#f9c9c0,tertiary:#eeaa66,quaternary:#3a3347,quinary:#5f3568,senary:#b26836"
+    class="icons">
+    </lord-icon>
+    <p>Log out</p>
+  </a>
+</div>
+{% endblock %}

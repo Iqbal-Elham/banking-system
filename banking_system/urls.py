@@ -23,11 +23,12 @@ from banking_app.views import HomeView
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
+    path('', include('banking_app.urls', namespace='')),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path(
-        'transactions/',
-        include('transactions.urls', namespace='transactions')
+        'dashboard/',
+        include('transactions.urls', namespace='dashboard')
     )
 ] 
 
