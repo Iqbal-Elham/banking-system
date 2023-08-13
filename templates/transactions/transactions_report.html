@@ -8,9 +8,11 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 {% endblock %}
 
+{% block header_title %}Transactions Report{% endblock %}
 {% block content %}
     <div class="">
         <h1 class="">Transactions Report</h1>
+        <a href="{% url 'transactions:print_transactions' %}" target="_blank">Print Transactions Table</a>
         <hr />
         <form method="get">
             <div class="search-container">

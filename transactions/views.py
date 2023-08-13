@@ -22,10 +22,9 @@ from .forms import TransferForm
 from accounts.models import User
 
 from django.core.mail import send_mail
-from django.core.signals import request_finished
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from .signals import send_transaction_email
+from io import BytesIO
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle,  Spacer
 
 class TransactionRepostView(LoginRequiredMixin, ListView):
     template_name = 'transactions/transactions_report.html'
@@ -200,6 +199,88 @@ def TransferMoneyView(request):
         form = TransferForm()
 
     return render(request, 'transactions/transfer.html', {'form': form})
+
+@login_required
+def print_transactions_pdf(request):
+    user = request.user.id
+    transactions = Transaction.objects.filter(account_id=user) 
+
+    # form = TransactionDateRangeForm(request.POST)
+    # print(form)
+    # if form.is_valid():
+    #     start_date, end_date = form.cleaned_data['daterange']
+    #     print("helllooo",  start_date, end_date)
+    #     transactions = Transaction.objects.filter(account_id=user, timestamp__range=(start_date, end_date))
+    # else:
+    #     transactions = Transaction.objects.filter(account_id=user)
+    #     print("jjjjjjj", transactions)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="transactions.pdf"'
+
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    elements = []
+
+    try:
+        user_account = User.objects.get(id=user)
+        print(user_account)
+        account_details = [
+            ['Full name:', user_account.get_full_name()],
+            ['Email:', user_account.email],
+            ['User Account Number:', user_account.account.account_no],
+            ['Bank:', 'Banker, The first digital banking system'],
+        ]
+    except UserBankAccount.DoesNotExist:
+        account_details = []
+
+    details_table = Table(account_details)
+    details_table.setStyle(TableStyle([
+        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica-Bold'),
+    ]))
+    elements.append(details_table)
+
+    elements.append(Spacer(1, 30))
+
+    # Create a list of lists containing transaction data for the table
+    data = [['transaction type', 'date', 'Amount', 'Balance After Transaction']]
+    for transaction in transactions:
+        balance = transaction.balance_after_transaction
+        if transaction.transaction_type == 1:
+            transaction.transaction_type = 'Deposit'
+        elif transaction.transaction_type == 2:
+            transaction.transaction_type = 'Withdrawal'
+        elif transaction.transaction_type == 3:
+            transaction.transaction_type = 'Transfer'
+        elif transaction.transaction_type == 4:
+            transaction.transaction_type = 'Received'
+        data.append([transaction.transaction_type, 
+                     transaction.timestamp.strftime('%Y-%m-%d %H:%M'), 
+                     transaction.amount, 
+                     transaction.balance_after_transaction,])
+    data.append(['', '','Total Balance', balance])
+
+    # Create the table and set its style
+    table = Table(data)
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), 'purple'),
+        ('TEXTCOLOR', (0, 0), (-1, 0), (1, 1, 1)),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), (0.9, 0.9, 0.9)),
+        ('GRID', (0, 0), (-1, -1), 1, (0.7, 0.7, 0.7)),
+    ])
+    table.setStyle(style)
+
+    elements.append(table)
+    doc.build(elements)
+
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+
+    return response
 
 
 def UserProfileView(request):

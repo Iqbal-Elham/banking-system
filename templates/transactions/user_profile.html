@@ -2,24 +2,41 @@
 {% load static %}
 {% block title %}Profile{% endblock %}
 
+{% block header_title %}Profile{% endblock %}
 {% block content %}
-<h1>Profile</h1>
-<img src="{{ user.profile_photo.url }}" alt="Profile Photo" width="200">
 
-<h2>Personal Information</h2>
-<p><strong>Email:</strong> {{ user.email }}</p>
-<p><strong>First_name:</strong> {{ user.first_name }}</p>
-<p><strong>lastname:</strong> {{ user.last_name }}</p>
-<p><strong>Gender:</strong> {{ user.account.gender }}</p>
-<p><strong>Birth Date:</strong> {{ user.account.birth_date }}</p>
-<p><strong>Phone Number:</strong> {{ user.account.phone_number }}</p>
-<p><strong>Address:</strong> {{ user.address.street_address }}, {{ user.address.postal_code }}, {{ user.address.city }}, {{ user.address.country }}</p>
-
-<h2>Bank Account Information</h2>
-<p><strong>Account Type:</strong> {{ user.account.account_type.name }}</p>
-<p><strong>Account Number:</strong> {{ user.account.account_no }}</p>
-<p><strong>Balance:</strong> ${{ user.account.balance }}</p>
-<p><strong>Initial Deposit Date:</strong> {{ user.account.initial_deposit_date }}</p>
+    <div class="profile-container">
+        <div class="top">
+            <div class="profile-img">
+                <img src="{{ user.profile_photo.url }}" alt="Profile Photo" width="250" class="img-fluid">
+            </div>
+            <div class="account-info">
+                <h2>Bank Account Information</h2>
+                <p><strong>Account Type:</strong> {{ user.account.account_type.name }}</p>
+                <p><strong>Account Number:</strong> {{ user.account.account_no }}</p>
+                <p><strong>Balance:</strong> AFN {{ user.account.balance }}</p>
+                <p><strong>Initial Deposit Date:</strong> {{ user.account.initial_deposit_date }}</p>
+                <img src="{% static 'img/money.png' %}" alt="money-icon" width="150" class="img-fluid money-icon">
+            </div>
+        </div>
+        <div class="bottom">
+            <h2>Personal Information</h2>
+           <div class="personal-info">
+            <div>
+                <p><strong>First name:</strong> {{ user.first_name }}</p>
+                <p><strong>Last name:</strong> {{ user.last_name }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Gender:</strong> {{ user.account.gender }}</p>
+            </div>
+            <div>
+                <p><strong>Birth Date:</strong> {{ user.account.birth_date }}</p>
+                <p><strong>Phone Number:</strong> {{ user.account.phone_number }}</p>
+                <p><strong>Address:</strong> {{ user.address.street_address }}, {{ user.address.postal_code }}, {{ user.address.city }}, {{ user.address.country }}</p>
+            </div>
+            </div>
+        
+        </div>
+    </div>
 
 
 {% endblock %}
