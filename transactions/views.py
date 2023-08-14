@@ -282,7 +282,7 @@ def print_transactions_pdf(request):
 
     return response
 
-
+@login_required
 def UserProfileView(request):
     user_id = request.user.id
     user = User.objects.get(id=user_id)  # Fetch the user's data

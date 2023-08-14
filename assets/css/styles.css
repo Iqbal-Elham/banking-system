@@ -378,3 +378,95 @@ a {
   padding: 1rem;
   border-radius: 1rem;
 }
+
+/* From uiverse.io by @alexruix */
+.inp {
+  line-height: 28px;
+  border: 2px solid transparent;
+  border-bottom-color: #777;
+  padding: .2rem 0;
+  outline: none;
+  background-color: transparent;
+  color: #0d0c22;
+  transition: .3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  width: 50%;
+ }
+ 
+ .inp:focus, .inp:hover {
+  outline: none;
+  padding: .2rem 1rem;
+  border-radius: 1rem;
+  border-color: #7a9cc6;
+ }
+ 
+ .inp::placeholder {
+  color: #777;
+ }
+ 
+ .inp:focus::placeholder {
+  opacity: 0;
+  transition: opacity .3s;
+ }
+ 
+ .transfer-btn {
+  margin: auto;
+  width: 25%;
+  font-family: inherit;
+  font-size: 20px;
+  background: #460056;
+  color: white;
+  padding: 0.4em 1em;
+  padding-left: 0.9em;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.transfer-btn span {
+  display: block;
+  margin-left: 0.3em;
+  transition: all 0.3s ease-in-out;
+}
+
+.transfer-btn svg {
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.transfer-btn:hover .svg-wrapper {
+  animation: fly-1 0.6s ease-in-out infinite alternate;
+}
+
+.transfer-btn:hover svg {
+  transform: translateX(1.2em) rotate(45deg) scale(1.1);
+}
+
+.transfer-btn:hover span {
+  transform: translateX(5em);
+}
+
+.transfer-btn:active {
+  transform: scale(0.95);
+}
+
+@keyframes fly-1 {
+  from {
+    transform: translateY(0.1em);
+  }
+
+  to {
+    transform: translateY(-0.1em);
+  }
+}
+
+
+ 
+ 
+ 
+ 
+ 
+ 

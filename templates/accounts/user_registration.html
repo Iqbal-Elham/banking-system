@@ -1,27 +1,28 @@
-{% extends 'accounts/home.html' %}
+{% extends 'accounts/_base.html' %}
 {% load static %}
 {% block title %}Sign Up{% endblock %}
 {% block content %}
 <div class="page-content">
-        {% if registration_form.non_field_errors %}
-        {% for error in registration_form.non_field_errors %}
-        <div class="" role="alert">
-            <p class="">Error!</p>
-            <p class="">{{ error }}</p>
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% if address_form.non_field_errors %}
-        {% for error in address_form.non_field_errors %}
-        <div class="" role="alert">
-            <p class="">Error!</p>
-            <p class="">{{ error }}</p>
-        </div>
-        {% endfor %}
-        {% endif %}
-
+    
     <div class="form-content">
+        <a href="/"><i class='bx bx-x-circle x-icon text-light'></i></a>
         <form class="form-detail" action="#" method="post" id="myform" enctype="multipart/form-data">
+            {% if registration_form.non_field_errors %}
+            {% for error in registration_form.non_field_errors %}
+            <div class="" role="alert">
+                <p class="">Error!</p>
+                <p class="">{{ error }}</p>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% if address_form.non_field_errors %}
+            {% for error in address_form.non_field_errors %}
+            <div class="" role="alert">
+                <p class="">Error!</p>
+                <p class="">{{ error }}</p>
+            </div>
+            {% endfor %}
+            {% endif %}
             {% csrf_token %}
             {% for hidden_field in registration_form.hidden_fields %}
             {{ hidden_field.errors }}
@@ -171,7 +172,7 @@
                 </div>
                 <div class="form-row-last">
                     <input type="submit" name="register" class="register" value="Register">
-                    <h4 class="text-light mb-4">Have an account? <a href="/accounts/login" class="text-info text-decoration-none"> Login</a></h4>
+                    <h5 class="text-secondary mb-4">Have an account? <a href="/accounts/login" class="text-decoration-none text-light"> Login</a></h5>
                 </div>
             </div>
         </form>
