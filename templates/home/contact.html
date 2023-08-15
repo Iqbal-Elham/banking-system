@@ -1,13 +1,10 @@
-{% extends 'home/_base.html' %}
-
-{% block content %}
+{% extends 'home/_base.html' %} {% block content %}
 <div class="contact-container">
-  <a href="/"><i class='bx bx-x-circle x-icon'></i></a>
+  <a href="/"><i class="bx bx-x-circle x-icon"></i></a>
   <h2 class="text-center">Contact Us</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Submit</button>
-</form>
+  <form method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
 </div>
 {% endblock %}
