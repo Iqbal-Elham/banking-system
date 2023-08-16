@@ -1,1 +1,6 @@
 .venv
+
+accounts/__pycache__
+banking_app/__pycache__
+banking_system/__pycache__
+transactions/__pycache__
