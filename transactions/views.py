@@ -285,10 +285,10 @@ def print_transactions_pdf(request):
 @login_required
 def UserProfileView(request):
     user_id = request.user.id
-    user = User.objects.get(id=user_id)  # Fetch the user's data
+    user = User.objects.get(id=user_id) 
 
     context = {
-        'user': user,  # Pass the user object to the template context
+        'user': user, 
     }
 
     # user_id = request.user.id

@@ -6,7 +6,7 @@
     <div class="login-cc">
         <a href="/"><i class='bx bx-x-circle x-icon'></i></a>
         <h1 class="title mb-5">Sign In </h1>
-        <form method="post" class="login-form w-100 d-flex flex-column justify-content-center align-items-center mb-4" id="myform">
+        <form method="post" class="w-100 d-flex flex-column justify-content-center mb-4" id="myform">
             {% csrf_token %}
             {% for hidden_field in form.hidden_fields %}
             {{ hidden_field.errors }}
@@ -30,13 +30,14 @@
                     </div>
                 {% endfor %}
             {% endif %}
-            
-            <button class="login-btn mt-1" type="submit">
+            <a href="{% url 'accounts:password_reset' %}" class="signup-btn">Forgot password?</a>
+            <button class="login-btn mt-3 mx-0" type="submit">
                 <span>Sign In</span>
             </button>
     </form>
     <p>Don't have an account? </p>
     <a class="signup-btn" href="{% url 'accounts:user_registration' %}">Sign up</a>
+</div>
 </div>
 {% endblock %}
 

@@ -7,6 +7,8 @@ from django.db import transaction
 from .models import User, BankAccountType, UserBankAccount, UserAddress
 from .constants import GENDER_CHOICE
 
+from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm
+
 
 class UserAddressForm(forms.ModelForm):
 
@@ -88,3 +90,28 @@ class UserRegistrationForm(UserCreationForm):
                 )
             )
         return user
+    
+
+
+class bootstrapStyleMixin:
+    field_names = None 
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.field_names:
+            for fieldname in self.field_names:
+                self.fields[fieldname].widget.attrs = {
+                    'class': 'form-control mt-1', 
+                    'placeholder': f'Enter {fieldname}'
+                    }
+        
+        else:
+            raise ValueError('The field names must be set')
+
+
+class MyResetPassForm(bootstrapStyleMixin, PasswordResetForm):
+    field_names = ['email']
+    
+class MySetPassForm(bootstrapStyleMixin, SetPasswordForm):
+    field_names = ['new_password1', 'new_password2']
