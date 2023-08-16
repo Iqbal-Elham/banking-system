@@ -1,42 +1,43 @@
-{% extends 'accounts/home.html' %}
+{% extends 'accounts/_base.html' %}
 {% load static %}
 {% block title %}Sign In{% endblock %}
 {% block content %}
-<div class="page-content">
-{% if form.non_field_errors %}
-    {% for error in form.non_field_errors %}
-        <div class="" role="alert">
-            <p class="">Error!</p>
-            <p class="">{{ error }}</p>
-        </div>
-    {% endfor %}
-{% endif %}
-<div class="login-cc">
-    <h1 class="title mb-5">Sign In</h1>
-    <form method="post" class="login-form w-100 d-flex flex-column gap-4 justify-content-center align-items-center mb-4" id="myform">
-        {% csrf_token %}
-        {% for hidden_field in form.hidden_fields %}
+<div class="login-content">
+    <div class="login-cc">
+        <a href="/"><i class='bx bx-x-circle x-icon'></i></a>
+        <h1 class="title mb-5">Sign In </h1>
+        <form method="post" class="w-100 d-flex flex-column justify-content-center mb-4" id="myform">
+            {% csrf_token %}
+            {% for hidden_field in form.hidden_fields %}
             {{ hidden_field.errors }}
             {{ hidden_field }}
-        {% endfor %}
-        {% for field in form.visible_fields %}
-        <div class="w-100">
-            <input class="form-control" name="{{ field.name }}" id="{{ field.id_for_label }}" type="{{ field.widget_type }}" placeholder="{{ field.label }}">
-            <span class="input-border"></span>
-        </div>
+            {% endfor %}
+            {% for field in form.visible_fields %}
+            <div class="w-100">
+                <input class="form-control mb-3" name="{{ field.name }}" id="{{ field.id_for_label }}" type="{{ field.widget_type }}" placeholder="{{ field.label }}">
+                <span class="input-border"></span>
+            </div>
             {% if field.errors %}
-                {% for error in field.errors %}
-                <p class="">{{ error }}</p>
+            {% for error in field.errors %}
+            <p class="">{{ error }}</p>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <div class="m-0 p-0" role="alert">
+                        <p class="">{{ error }}</p>
+                    </div>
                 {% endfor %}
             {% endif %}
-        {% endfor %}
-
-            <button class="login-btn" type="submit">
-                Sign In
+            <a href="{% url 'accounts:password_reset' %}" class="signup-btn">Forgot password?</a>
+            <button class="login-btn mt-3 mx-0" type="submit">
+                <span>Sign In</span>
             </button>
     </form>
     <p>Don't have an account? </p>
-    <a class="signup-btn" href="/accounts/register"> Sign up</a>
+    <a class="signup-btn" href="{% url 'accounts:user_registration' %}">Sign up</a>
+</div>
 </div>
 {% endblock %}
 

@@ -11,7 +11,7 @@ from .managers import UserManager
 
 class User(AbstractUser):
     username = None
-    profile_photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True)
+    profile_photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True, default='img/default.png')
     email = models.EmailField(unique=True, null=False, blank=False)
 
     class Meta:

@@ -18,7 +18,6 @@
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
     />
-
     <link rel="stylesheet" href="{% static 'css/home.css' %}" />
 
     {% block head_extra %}
@@ -31,8 +30,8 @@
   <body>
     
     <div class="d-flex flex-column align-items-center gap-5">
-        <div class="d-flex flex-column align-items-center">
-            <img src="{% static 'img/logo.png' %}" alt="logo" width="100"/>
+        <div class="d-flex flex-column align-items-center home-logo">
+            <img src="{% static 'img/logo.png' %}" alt="logo" width="80"/>
             <h1 class="text-white">Banker</h1>
         </div>
     {% block content %}

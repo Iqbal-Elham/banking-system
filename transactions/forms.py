@@ -93,6 +93,6 @@ class TransactionDateRangeForm(forms.Form):
             raise forms.ValidationError("Invalid date range")
 
 class TransferForm(forms.Form):
-    recipient_account_number = forms.CharField(label='Recipient Account Number')
-    recipient_name = forms.CharField(label='Recipient Name')
-    amount = forms.DecimalField(label='Amount')
+    recipient_account_number = forms.CharField(label='Recipient Account Number', widget=forms.TextInput(attrs={'class': 'inp d-block'}))
+    recipient_name = forms.CharField(label='Recipient Name', widget=forms.TextInput(attrs={'class': 'inp d-block'}))
+    amount = forms.DecimalField(label='Amount', widget=forms.TextInput(attrs={'class': 'inp d-block'}))
