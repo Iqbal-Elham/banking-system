@@ -4,8 +4,8 @@
 
 {% block header_title %}Profile{% endblock %}
 {% block content %}
-
-    <div class="profile-container">
+    <div class="dashboard-content">
+    <div class="profile-container bg-secondary">
         <div class="left">
             <div class="profile-img">
                 <img src="{{ user.profile_photo.url }}" alt="Profile Photo" width="250" class="img-fluid">
@@ -31,17 +31,16 @@
 
 
         <div class="">
-            <h2>Personal Information</h2>
+        <h2>Personal Information</h2>
            <div class="personal-info">
-            <div>
-                <p><strong>Birth Date:</strong> {{ user.account.birth_date }}</p>
-                <p><strong>Phone Number:</strong> {{ user.account.phone_number }}</p>
-                <p><strong>Address:</strong> {{ user.address.street_address }}, {{ user.address.postal_code }}, {{ user.address.city }}, {{ user.address.country }}</p>
+                <div>
+                    <p><strong>Birth Date:</strong> {{ user.account.birth_date }}</p>
+                    <p><strong>Phone Number:</strong> {{ user.account.phone_number }}</p>
+                    <p><strong>Address:</strong> {{ user.address.street_address }}, {{ user.address.postal_code }}, {{ user.address.city }}, {{ user.address.country }}</p>
+                </div>
             </div>
-            </div>
-        
         </div>
     </div>
 
-
+</div>
 {% endblock %}

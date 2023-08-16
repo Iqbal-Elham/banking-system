@@ -3,7 +3,7 @@
 
 {% block header_title %}Transfer Money{% endblock %}
 {% block content %}
-
+<div class="dashboard-content">
 <h2 class='transfer-title'>Transfer Money</h2>
 <form method="post" class="d-flex flex-column w-100">
     {% csrf_token %}
@@ -20,4 +20,5 @@
         <span>Transfer</span>
       </button>
 </form>
-</div>{% endblock %}
+</div>
+{% endblock %}
