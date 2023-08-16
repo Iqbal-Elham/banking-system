@@ -3,10 +3,10 @@
 
 {% block header_title %}{{title}}{% endblock %}
 {% block content %}
-<h1 class="">{{ title }}</h1>
+<h1 class="content-title">{{ title }}</h1>
 <hr />
 <div class="">
-    <form method="post" class="w-50">
+    <form method="post" class="actions-form">
         {% csrf_token %}
 
         <div class="mb-4">
