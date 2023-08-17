@@ -316,6 +316,41 @@ a {
   box-shadow: inset 5px 5px 17px #c8c8c8, inset -5px -5px 17px #ffffff;
 }
 
+.profile-content {
+  margin-top: 5rem;
+  padding: 0.3rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.8rem;
+  overflow: hidden;
+}
+
+.profile-content h2 {
+  text-align: center;
+  font-size: 28px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  z-index: 1;
+}
+
+.left {
+  background-color: white;
+  height: 100%;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.201);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+}
+
+.profile-img{
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.501);
+  margin: auto;
+}
+
 .profile-container {
   padding: 1rem;
 }
@@ -327,25 +362,19 @@ a {
   margin-bottom: 2rem;
 }
 
-.profile-container .top .account-info {
+ .account-info {
   display: flex;
   flex-direction: column;
   padding: 1.1rem 2rem;
   gap: 0.5rem;
-  background: url('../img/pxfuel.jpg');
-  background-size: cover;
+  background: url('../img/purple-background-2.jpg');
+  /* background: white; */
+  background-size:cover;
   border-radius: 1rem;
-  width: 50%;
   position: relative;
   
 }
-
-.profile-container .top .profile-img{
-  border: 3px solid black;
-  padding: 1rem;
-  border-radius: 1rem;
-}
-.profile-container .top .account-info::before{
+.account-info::before{
   content: "";
   position: absolute;
   border-radius: 1rem;
@@ -353,10 +382,11 @@ a {
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(6px); 
+  filter: brightness(0.7);
+  backdrop-filter: blur(10px); 
 }
 
-.profile-container .top .account-info h2 {
+.account-info h2 {
   text-align: center;
   color: white;
   font-size: 36px;
@@ -364,39 +394,33 @@ a {
   z-index: 1;
 }
 
-.profile-container .top .account-info p {
+.account-info p {
   font-family: cursive;
   z-index: 1;
   color: rgb(216, 212, 212);
 
 }
 
-.profile-container .top .account-info .money-icon{
+.money-icon{
   position: absolute;
   right: 10px;
   bottom: 10px;
+  opacity: 0.5;
+  /* filter: invert(0.1); */
 }
 
-.bottom {
-  padding: 1rem;
-  border: 2px solid black;
-  border-radius: 1rem;
-
-}
-
-.bottom h2 {
-  text-align: center;
-  font-size: 28px;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
-  z-index: 1;
-}
-
-.bottom .personal-info {
-  display: flex;
-  justify-content: space-around;
-  gap: 1rem;
+.other-info {
+  background-color: white;
   padding: 1rem;
   border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+
+.other-info .contact-info {
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 /* From uiverse.io by @alexruix */
@@ -512,6 +536,15 @@ width: 50%;
 
   .transfer-title {
     text-align: center;
+  }
+
+  .profile-content{
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .account-info, .other-info {
+    margin-top: 1rem;
   }
 
 }

@@ -4,43 +4,41 @@
 
 {% block header_title %}Profile{% endblock %}
 {% block content %}
-    <div class="dashboard-content">
-    <div class="profile-container bg-secondary">
+    <div class="profile-content">
         <div class="left">
+            <h2 class="text-center">Personal Information</h2>
             <div class="profile-img">
                 <img src="{{ user.profile_photo.url }}" alt="Profile Photo" width="250" class="img-fluid">
             </div>
             <div>
-                <p><strong>First name:</strong> {{ user.first_name }}</p>
-                <p><strong>Last name:</strong> {{ user.last_name }}</p>
-                <p><strong>Email:</strong> {{ user.email }}</p>
-                <p><strong>Gender:</strong> {{ user.account.gender }}</p>
+                <p class="d-flex justify-content-between"><strong>First name:</strong> {{ user.first_name }}</p>
+                <p class="d-flex justify-content-between"><strong>Last name:</strong> {{ user.last_name }}</p>
+                <p class="d-flex justify-content-between"><strong>Birth Date:</strong> {{ user.account.birth_date }}</p>
+                <p class="d-flex justify-content-between"><strong>Gender:</strong> {{ user.account.gender }}</p>
             </div>
         </div>
+        
+        <div class="right">
+            
+            <div class="account-info">
+                <h2>Bank Account Information</h2>
+                <p><strong>Account Type: &nbsp;</strong> {{ user.account.account_type.name }}</p>
+                <p><strong>Account Number: &nbsp;</strong> {{ user.account.account_no }}</p>
+                <p><strong>Balance: &nbsp;</strong> AFN {{ user.account.balance }}</p>
+                <p><strong>Initial Deposit Date: &nbsp;</strong> {{ user.account.initial_deposit_date }}</p>
+                <img src="{% static 'img/money.png' %}" alt="money-icon" width="150" class="img-fluid money-icon">
+            </div>
 
-
-
-        <div class="account-info">
-            <h2>Bank Account Information</h2>
-            <p><strong>Account Type:</strong> {{ user.account.account_type.name }}</p>
-            <p><strong>Account Number:</strong> {{ user.account.account_no }}</p>
-            <p><strong>Balance:</strong> AFN {{ user.account.balance }}</p>
-            <p><strong>Initial Deposit Date:</strong> {{ user.account.initial_deposit_date }}</p>
-            <img src="{% static 'img/money.png' %}" alt="money-icon" width="150" class="img-fluid money-icon">
-        </div>
-
-
-        <div class="">
-        <h2>Personal Information</h2>
-           <div class="personal-info">
-                <div>
-                    <p><strong>Birth Date:</strong> {{ user.account.birth_date }}</p>
-                    <p><strong>Phone Number:</strong> {{ user.account.phone_number }}</p>
-                    <p><strong>Address:</strong> {{ user.address.street_address }}, {{ user.address.postal_code }}, {{ user.address.city }}, {{ user.address.country }}</p>
+            
+            <div class="other-info">
+                <h2>Contact Information</h2>
+                <div class="contact-info">
+                    <p><strong>Email: &nbsp;</strong> {{ user.email }}</p>
+                    <p><strong>Phone Number: &nbsp;</strong> {{ user.account.phone_number }}</p>
+                    <p><strong>Address: &nbsp;</strong> {{ user.address.street_address }}, {{ user.address.city }}, {{ user.address.country }}</p>
+                    <p><strong>Postal code: &nbsp;</strong> {{ user.address.postal_code }}</p>
                 </div>
             </div>
         </div>
-    </div>
-
 </div>
 {% endblock %}
