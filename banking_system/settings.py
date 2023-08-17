@@ -139,7 +139,7 @@ JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = BASE_DIR / 'client_secrets.jso
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kabul'
 
 USE_I18N = True
 
