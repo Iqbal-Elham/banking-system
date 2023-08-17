@@ -10,7 +10,7 @@
 
 {% block header_title %}Transactions Report{% endblock %}
 {% block content %}
-    <div class="">
+<div class="dashboard-content">
         <h1 class="">Transactions Report</h1>
         <a href="{% url 'transactions:print_transactions' %}" target="_blank">Print Transactions Table</a>
         <hr />
@@ -29,7 +29,7 @@
         </form>
         <div class="transaction-table">
         <table class="table table-striped">
-            <thead class="thead-primary">
+            <thead class="">
             <tr class="">
                 <th class="">Transaction Type</th>
                 <th class="">Date</th>

@@ -32,6 +32,8 @@ AUTH_USER_MODEL = 'accounts.User'
 # Application definition
 
 INSTALLED_APPS = [
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -111,12 +113,33 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+JET_DEFAULT_THEME = 'light-violet'
+JET_CHANGE_FORM_SIBLING_LINKS = True
+
+JET_SIDE_MENU_ITEMS = [
+    {'app_label': 'accounts', 'items': [
+        {'name': 'bankaccounttype'},
+        {'name': 'useraddress'},
+        {'name': 'userbankaccount'},
+        {'name': 'user'},
+    ]},
+    {'app_label': 'banking_app', 'label':'User Messages','items': [
+        {'name': 'usermessage'},
+    ]},
+    {'app_label': 'transactions', 'items': [
+        {'name': 'transaction'},
+        {'name': 'transfermoney'},
+    ]},
+]
+
+
+JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = BASE_DIR / 'client_secrets.json'
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kabul'
 
 USE_I18N = True
 
