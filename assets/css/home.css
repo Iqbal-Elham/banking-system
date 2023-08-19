@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Montserrat:wght@300;400;500&family=Roboto+Slab:wght@300;400;500&family=Roboto:wght@300;400;500;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lobster&family=Tilt+Prism&display=swap");
 body {
-  /* background: radial-gradient(circle, rgba(75, 0, 112, 0.797) 29%, rgba(74, 53, 104, 0.764) 75%, #430451b8 100%); */
+  background: radial-gradient(circle, #4b0070cb 29%, rgba(74, 53, 104, 0.764) 75%, #430451b8 100%);
   background: url(../img/purple-background.jpg);
   height: 100vh;
   background-repeat: no-repeat;
