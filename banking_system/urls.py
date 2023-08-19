@@ -14,7 +14,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from jet.dashboard.dashboard_modules import google_analytics_views
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -23,8 +22,6 @@ from django.conf.urls.static import static
 from banking_app.views import HomeView
 
 urlpatterns = [
-    path('jet/', include('jet.urls', 'jet')),
-    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path('', HomeView.as_view(), name='home'),
     path('', include('banking_app.urls', namespace='')),
     path('admin/', admin.site.urls),
