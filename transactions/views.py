@@ -176,15 +176,17 @@ def TransferMoneyView(request):
 
                 sender_account.save()
                 recipient_account.save()
+
+                current_datetime = timezone.now()
                 
                  # Send email to sender
                 sender_subject = 'Transfer Notification'
-                sender_message = f'You have transferred ${amount} to {recipient_name}\'s account.'
+                sender_message = f'You have transferred {amount} AFN to {recipient_name}\'s account with the Account Number: {recipient_account.account_no}'
                 sender_recipient_list = [request.user.email]  # Sender's email
                 sender_name = request.user.first_name
 
                 template_name = "emails/transfer.html"
-                context = {"recipient_name": sender_name, "message": sender_message, 'subject': sender_subject, 'amount': amount}
+                context = {"message": sender_message, 'subject': sender_subject, 'current_datetime':current_datetime}
 
                 sender_email_body = render_to_string(template_name, context)
 
@@ -201,12 +203,12 @@ def TransferMoneyView(request):
 
                 # Send email to recipient
                 recipient_subject = 'Received Money Notification'
-                recipient_message = f'You have received ${amount} in a transfer from {request.user.username}.'
+                recipient_message = f'You have received {amount} AFN in a transfer from {request.user.first_name} with the Account number: {request.user.account.account_no}.'
                 recipient_recipient_list = [recipient_account.user.email]  # Receiver's email
                 recipient_name = request.user.first_name
 
                 template_name = "emails/receive.html"
-                context = {"recipient_name": recipient_name, "message": recipient_message, 'subject': recipient_subject, 'amount': amount}
+                context = {"message": recipient_message, 'subject': recipient_subject, 'amount': amount, 'current_datetime': current_datetime}
 
                 email_body = render_to_string(template_name, context)
 
