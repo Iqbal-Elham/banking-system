@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from .jazzmin import JAZZMIN_SETTINGS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,8 +33,7 @@ AUTH_USER_MODEL = 'accounts.User'
 # Application definition
 
 INSTALLED_APPS = [
-    'jet.dashboard',
-    'jet',
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -112,28 +112,60 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": True,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-purple",
+    "accent": "accent-purple",
+    "navbar": "navbar-purple navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-dark-purple",
+    "sidebar_nav_small_text": True,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "minty",
+    "dark_mode_theme": "darkly",
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
+}
 
-JET_DEFAULT_THEME = 'light-violet'
-JET_CHANGE_FORM_SIBLING_LINKS = True
 
-JET_SIDE_MENU_ITEMS = [
-    {'app_label': 'accounts', 'items': [
-        {'name': 'bankaccounttype'},
-        {'name': 'useraddress'},
-        {'name': 'userbankaccount'},
-        {'name': 'user'},
-    ]},
-    {'app_label': 'banking_app', 'label':'User Messages','items': [
-        {'name': 'usermessage'},
-    ]},
-    {'app_label': 'transactions', 'items': [
-        {'name': 'transaction'},
-        {'name': 'transfermoney'},
-    ]},
-]
+# JET_DEFAULT_THEME = 'light-violet'
+# JET_CHANGE_FORM_SIBLING_LINKS = True
+
+# JET_SIDE_MENU_ITEMS = [
+#     {'app_label': 'accounts', 'items': [
+#         {'name': 'bankaccounttype'},
+#         {'name': 'useraddress'},
+#         {'name': 'userbankaccount'},
+#         {'name': 'user'},
+#     ]},
+#     {'app_label': 'banking_app', 'label':'User Messages','items': [
+#         {'name': 'usermessage'},
+#     ]},
+#     {'app_label': 'transactions', 'items': [
+#         {'name': 'transaction'},
+#         {'name': 'transfermoney'},
+#     ]},
+# ]
 
 
-JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = BASE_DIR / 'client_secrets.json'
+# JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = BASE_DIR / 'client_secrets.json'
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -183,3 +215,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
+
+JAZZMIN_SETTINGS = JAZZMIN_SETTINGS
