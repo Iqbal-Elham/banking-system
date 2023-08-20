@@ -2,7 +2,7 @@ import datetime
 
 from django import forms
 from django.conf import settings
-
+from accounts.models import User, UserAddress, UserBankAccount
 from .models import Transaction
 
 
@@ -36,7 +36,7 @@ class DepositForm(TransactionForm):
 
         if amount < min_deposit_amount:
             raise forms.ValidationError(
-                f'You need to deposit at least {min_deposit_amount} $'
+                f'You need to deposit at least {min_deposit_amount} AFN'
             )
 
         return amount
@@ -56,17 +56,17 @@ class WithdrawForm(TransactionForm):
 
         if amount < min_withdraw_amount:
             raise forms.ValidationError(
-                f'You can withdraw at least {min_withdraw_amount} $'
+                f'You can withdraw at least {min_withdraw_amount} AFN'
             )
 
         if amount > max_withdraw_amount:
             raise forms.ValidationError(
-                f'You can withdraw at most {max_withdraw_amount} $'
+                f'You can withdraw at most {max_withdraw_amount} AFN'
             )
 
         if amount > balance:
             raise forms.ValidationError(
-                f'You have {balance} $ in your account. '
+                f'You have {balance} AFN in your account. '
                 'You can not withdraw more than your account balance'
             )
 
@@ -97,41 +97,34 @@ class TransferForm(forms.Form):
     recipient_name = forms.CharField(label='Recipient Name', widget=forms.TextInput(attrs={'class': 'inp d-block'}))
     amount = forms.DecimalField(label='Amount', widget=forms.TextInput(attrs={'class': 'inp d-block'}))
 
-class editRegisterForm(forms.Form):
-    
-    profile_pic = forms.ImageField(
-        widget=forms.FileInput(attrs={"id":"file"})
-    )
-    user_name = forms.CharField(
-        widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your username"}),
-        
-    )
-    email = forms.EmailField(
-        widget=forms.EmailInput(attrs={"class":"form-control","placeholder":"Enter your email","style":"text-transform:lowercase"}),
-        
-    )
-    city = forms.CharField(
-        widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your city"}),
 
-    )
-    address = forms.CharField(
-        widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your address"}),
-    
-    )
-    CHOICES = [
-        ('Male', 'Male'),
-        ('Female', 'Female'),
-    ]
-    gender = forms.ChoiceField(
-        widget=forms.RadioSelect(),
-        choices=CHOICES, 
+class bootstrapStyleMixin:
+    fields = None 
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.fields:
+            for fieldname in self.fields:
+                self.fields[fieldname].widget.attrs = {
+                    'class': 'inp w-100'
+                    }
         
-    )
-    phone_num = forms.CharField(
-        widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your phone number"}),
-    
-    )
-    whatsapp_num = forms.CharField(
-        widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your whatsapp number"}),
-    
-    )
+        else:
+            raise ValueError('The field names must be set')
+
+
+class UserEditForm(bootstrapStyleMixin, forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'profile_photo', 'email']
+
+class UserAddressEditForm(bootstrapStyleMixin, forms.ModelForm):
+    class Meta:
+        model = UserAddress
+        fields = ['street_address', 'city', 'postal_code', 'country']
+
+class UserAccountEditForm(bootstrapStyleMixin, forms.ModelForm):
+    class Meta:
+        model = UserBankAccount
+        fields = ['birth_date', 'gender', 'phone_number']
