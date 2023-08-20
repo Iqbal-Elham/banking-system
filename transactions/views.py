@@ -327,62 +327,6 @@ def UserProfileView(request):
     context = {
         'user': user, 
     }
-
-    # user_id = request.user.id
-    # user = User.objects.get(id=user_id)
-    # books = Book.objects.filter(user=user)
-    # profile = user_profile.objects.filter(user=request.user).first()
-    # editForm = editRegisterForm(request.POST or None, request.FILES or None,
-    # initial={
-    #     'user_name':user.username, 
-    #     'email':user.email,
-    #     'profile_pic':profile.profile_pic,
-    #     'city':profile.city,
-    #     'address':profile.address,
-    #     'gender':profile.gender,
-    #     'phone_num':profile.phone_num,
-    #     'whatsapp_num':profile.whatsapp_num,
-    #     })
-    # if editForm.is_valid():
-    #     profile_pic = editForm.cleaned_data.get('profile_pic')
-    #     user_name = editForm.cleaned_data.get('user_name')
-    #     email = editForm.cleaned_data.get('email')
-    #     city = editForm.cleaned_data.get('city')
-    #     address = editForm.cleaned_data.get('address')
-    #     gender = editForm.cleaned_data.get('gender')
-    #     phone_num = editForm.cleaned_data.get('phone_num')
-    #     whatsapp_num = editForm.cleaned_data.get('whatsapp_num')
-    #     username_is_exist = User.objects.filter(username=user_name).exists()
-    #     email_is_exist = User.objects.filter(email=email).exists()
-    #     if username_is_exist:
-    #         if user.username == user_name:
-    #             pass
-    #         else:
-    #             messages.error(request, "The username already exists")   
-    #     else:
-    #         user.username = user_name
-
-    #     if email_is_exist:
-    #         if user.email == email:
-    #             pass
-    #         else:
-    #             messages.warning(request, "The email already exists")   
-    #     else:
-    #         user.email = email
-
-    #     user.user_profile.city = city
-    #     user.user_profile.address = address
-    #     user.user_profile.gender = gender
-    #     user.user_profile.phone_num = phone_num
-    #     user.user_profile.whatsapp_num = whatsapp_num
-    #     user.user_profile.profile_pic = profile_pic
-    #     user.save()
-    #     user.user_profile.save()
-        
-    # context = {
-    #         'editForm' : editForm,
-    #         'books' : books,
-    #     }
     
     return render(request, 'transactions/user_profile.html', context)
 
