@@ -26,6 +26,10 @@ from io import BytesIO
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle,  Spacer
 
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.conf import settings
+
 class TransactionRepostView(LoginRequiredMixin, ListView):
     template_name = 'transactions/transactions_report.html'
     model = Transaction
@@ -172,20 +176,53 @@ def TransferMoneyView(request):
 
                 sender_account.save()
                 recipient_account.save()
+
+                current_datetime = timezone.now()
                 
                  # Send email to sender
                 sender_subject = 'Transfer Notification'
-                sender_message = f'You have transferred ${amount} to {recipient_name}\'s account.'
+                sender_message = f'You have transferred {amount} AFN to {recipient_name}\'s account with the Account Number: {recipient_account.account_no}'
                 sender_recipient_list = [request.user.email]  # Sender's email
+                sender_name = request.user.first_name
 
-                send_mail(sender_subject, sender_message, 'iqbal.ilhamm.77@gmail.com', sender_recipient_list)
+                template_name = "emails/transfer.html"
+                context = {"message": sender_message, 'subject': sender_subject, 'current_datetime':current_datetime}
+
+                sender_email_body = render_to_string(template_name, context)
+
+                email = EmailMessage(
+                        sender_subject,
+                        sender_email_body,
+                        settings.DEFAULT_FROM_EMAIL,  # Sender's email
+                        sender_recipient_list,  # List of recipient email addresses
+                    )
+                
+                email.content_subtype = "html"
+
+                email.send()
 
                 # Send email to recipient
                 recipient_subject = 'Received Money Notification'
-                recipient_message = f'You have received ${amount} in a transfer from {request.user.username}.'
+                recipient_message = f'You have received {amount} AFN in a transfer from {request.user.first_name} with the Account number: {request.user.account.account_no}.'
                 recipient_recipient_list = [recipient_account.user.email]  # Receiver's email
+                recipient_name = request.user.first_name
 
-                send_mail(recipient_subject, recipient_message, 'iqbal.ilham.77@gmail.com', recipient_recipient_list)
+                template_name = "emails/receive.html"
+                context = {"message": recipient_message, 'subject': recipient_subject, 'amount': amount, 'current_datetime': current_datetime}
+
+                email_body = render_to_string(template_name, context)
+
+                email = EmailMessage(
+                        recipient_subject,
+                        email_body,
+                        settings.DEFAULT_FROM_EMAIL,  # Sender's email
+                        recipient_recipient_list,  # List of recipient email addresses
+                    )
+                
+                email.content_subtype = "html"
+
+                email.send()
+                
 
                 TransferMoney.objects.create(sender=sender_account, recipient=recipient_account, amount=amount)
 
