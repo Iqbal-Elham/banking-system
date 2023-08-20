@@ -327,6 +327,20 @@ def UserProfileView(request):
     context = {
         'user': user, 
     }
-    
+
     return render(request, 'transactions/user_profile.html', context)
+
+# def edit_profile(request):
+#     user_profile = UserProfile.objects.get(user=request.user)
+    
+#     if request.method == 'POST':
+#         form = UserProfileForm(request.POST, instance=user_profile)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('profile')  # Redirect to the user's profile page
+#     else:
+#         form = UserProfileForm(instance=user_profile)
+    
+#     context = {'form': form}
+#     return render(request, 'edit_profile.html', context)
 

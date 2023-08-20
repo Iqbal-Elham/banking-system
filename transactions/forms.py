@@ -96,3 +96,42 @@ class TransferForm(forms.Form):
     recipient_account_number = forms.CharField(label='Recipient Account Number', widget=forms.TextInput(attrs={'class': 'inp d-block'}))
     recipient_name = forms.CharField(label='Recipient Name', widget=forms.TextInput(attrs={'class': 'inp d-block'}))
     amount = forms.DecimalField(label='Amount', widget=forms.TextInput(attrs={'class': 'inp d-block'}))
+
+class editRegisterForm(forms.Form):
+    
+    profile_pic = forms.ImageField(
+        widget=forms.FileInput(attrs={"id":"file"})
+    )
+    user_name = forms.CharField(
+        widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your username"}),
+        
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={"class":"form-control","placeholder":"Enter your email","style":"text-transform:lowercase"}),
+        
+    )
+    city = forms.CharField(
+        widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your city"}),
+
+    )
+    address = forms.CharField(
+        widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your address"}),
+    
+    )
+    CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+    ]
+    gender = forms.ChoiceField(
+        widget=forms.RadioSelect(),
+        choices=CHOICES, 
+        
+    )
+    phone_num = forms.CharField(
+        widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your phone number"}),
+    
+    )
+    whatsapp_num = forms.CharField(
+        widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Enter your whatsapp number"}),
+    
+    )
