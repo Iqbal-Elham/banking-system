@@ -367,7 +367,7 @@ a {
   padding: 1rem;
   border-radius: 1rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.501);
-  margin: auto;
+  margin: 0 auto;
 }
 
 .profile-container {
@@ -535,7 +535,7 @@ a {
   align-items: center;
   width: 50%;
   border-radius: 35px;
-  background: #430451b8;
+  background: #3b0247d8;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
   box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
   overflow: hidden;
@@ -546,7 +546,7 @@ a {
   content: " ";
   width: 0%;
   height: 100%;
-  background: #360350cb;
+  background: #3f015ee0;
   position: absolute;
   transition: all 0.4s ease-in-out;
   right: 0;
@@ -564,8 +564,8 @@ a {
   width: 100%;
   padding: 18px 25px;
   color: #fff;
-  font-size: 1.4em;
-  font-weight: 700;
+  font-size: 1em;
+  font-weight: 500;
   z-index: 20;
   transition: all 0.3s ease-in-out;
 }
@@ -627,6 +627,11 @@ width: 50%;
   
   .account-info, .other-info {
     margin-top: 1rem;
+  }
+
+  .change-pass-btn span {
+    font-size: 0.9rem;
+    font-weight: 400;
   }
 
 }
@@ -750,6 +755,7 @@ html {
   background-position: 50% 50%;
   background-blend-mode: overlay;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   -webkit-background-clip: text;
   animation: bg var(--duration) ease infinite;
   

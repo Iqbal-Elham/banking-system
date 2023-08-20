@@ -12,7 +12,7 @@
 {% block content %}
 <div class="dashboard-content">
         <h1 class="">Transactions Report</h1>
-        <a href="{% url 'transactions:print_transactions' %}" target="_blank">Print Transactions Table</a>
+        <a href="{% url 'transactions:print_transactions' %}" target="_blank" class="d-flex align-items-center justify-content-end"><i class='bx bxs-printer h2 text-dark'></i> Print Transactions</a>
         <hr />
         <form method="get">
             <div class="search-container">

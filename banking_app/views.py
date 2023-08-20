@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.views import View
 from .forms import ContactForm
@@ -40,6 +40,6 @@ class ContactUsView(View):
                 fail_silently=False,
             )
 
-            return render(request, 'home/contact.html')
+            return redirect('banking_app:contact_us')
 
         return render(request, self.template_name, {'form': form})

@@ -1,6 +1,6 @@
 from dateutil.relativedelta import relativedelta
 from django.http import HttpResponse
-
+from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -17,7 +17,7 @@ from transactions.forms import (
 from django.contrib.auth.decorators import login_required
 from transactions.models import Transaction, TransferMoney
 from accounts.models import UserBankAccount
-from .forms import TransferForm
+from .forms import TransferForm, UserEditForm, UserAddressEditForm, UserAccountEditForm
 
 from accounts.models import User
 
@@ -242,16 +242,6 @@ def print_transactions_pdf(request):
     user = request.user.id
     transactions = Transaction.objects.filter(account_id=user) 
 
-    # form = TransactionDateRangeForm(request.POST)
-    # print(form)
-    # if form.is_valid():
-    #     start_date, end_date = form.cleaned_data['daterange']
-    #     print("helllooo",  start_date, end_date)
-    #     transactions = Transaction.objects.filter(account_id=user, timestamp__range=(start_date, end_date))
-    # else:
-    #     transactions = Transaction.objects.filter(account_id=user)
-    #     print("jjjjjjj", transactions)
-
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="transactions.pdf"'
 
@@ -327,6 +317,29 @@ def UserProfileView(request):
     context = {
         'user': user, 
     }
-    
+
     return render(request, 'transactions/user_profile.html', context)
 
+class EditUserProfileView(View):
+    template_name = 'transactions/edit_profile.html'
+
+    def get(self, request):
+        user = request.user
+        form = UserEditForm(instance=user)
+        address_form = UserAddressEditForm(instance=user.address)
+        account_form = UserAccountEditForm(instance=user.account)
+        return render(request, self.template_name, {'form': form, 'address_form': address_form, 'account_form': account_form})
+
+    def post(self, request):
+        user = request.user
+        form = UserEditForm(request.POST, request.FILES, instance=user)
+        address_form = UserAddressEditForm(request.POST, instance=user.address)
+        account_form = UserAccountEditForm(request.POST, instance=user.account)
+        
+        if form.is_valid() and address_form.is_valid() and account_form.is_valid():
+            form.save()
+            address_form.save()
+            account_form.save()
+            return redirect('transactions:user_profile')  # Redirect to user's profile page
+        
+        return render(request, self.template_name, {'form': form, 'address_form': address_form, 'account_form': account_form})

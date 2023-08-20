@@ -10,8 +10,7 @@
             <div class="profile-img">
                 <img src="{{ user.profile_photo.url }}" alt="Profile Photo" width="250" class="img-fluid">
             </div>
-        </br>
-        </br>
+        <hr>
             <div>
                 <p class="d-flex justify-content-between"><strong>First name:</strong> {{ user.first_name }}</p>
                 <p class="d-flex justify-content-between"><strong>Last name:</strong> {{ user.last_name }}</p>
@@ -23,7 +22,8 @@
         <div class="right">
 
 
-            <div class="bank-card">
+            <div class="bank-card flex-column">
+                <h2 class="mb-3">Account Information</h2>
                 <aside class="card-front">
                     <p class="number">
                         Account number: {{ user.account.account_no }}
@@ -70,6 +70,9 @@
                     <p><strong>Address: &nbsp;</strong> {{ user.address.street_address }}, {{ user.address.city }}, {{ user.address.country }}</p>
                     <p><strong>Postal code: &nbsp;</strong> {{ user.address.postal_code }}</p>
                 </div>
+                <p class="text-end mx-3">
+                    <a href="{% url 'transactions:edit_profile' %}" class="search-btn p-2 text-dark"><i class='bx bxs-edit h4' ></i>Edit my profile</a>
+                </p>
             </div>
         </div>
 </div>

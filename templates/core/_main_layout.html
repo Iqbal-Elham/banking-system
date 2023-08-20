@@ -41,7 +41,7 @@
           </a>
           <div class="nav_list">
             {% with request.resolver_match.url_name as url_name %}
-            <a href="{% url 'transactions:user_profile' %}" class="nav_link {% if url_name == 'user_profile' %}active{% endif %}">
+            <a href="{% url 'transactions:user_profile' %}" class="nav_link {% if url_name == 'user_profile' or url_name == 'edit_profile' %}active{% endif %}">
               <i class='bx bxs-user-account nav_icon' ></i>
               <span class="nav_name">Profile</span>
             </a>

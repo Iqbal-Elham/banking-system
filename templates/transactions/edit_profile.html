@@ -1,0 +1,23 @@
+{% extends 'core/_main_layout.html' %}
+
+
+{% block header_title %}Edit Your Profile{% endblock %}
+{% block content %}
+<div class="dashboard-content">
+    <h2 class='transfer-title'>Edit your profile</h2>
+    <form method="post" enctype="multipart/form-data" class="d-flex gap-5">
+    {% csrf_token %}
+           <div class="w-50">
+            {{ form.as_p }}
+            {{ address_form.as_p }}
+           </div>
+           
+           <div class="w-50">
+            {{ account_form.as_p }}
+            <button class="change-pass-btn mt-4 mx-auto" type="submit">
+                <span>Save Changes</span>
+            </button>
+           </div>
+    
+</form>
+{% endblock %}
