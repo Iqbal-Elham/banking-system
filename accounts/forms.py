@@ -4,11 +4,17 @@ from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 
+from django.core.validators import RegexValidator
+
 from .models import User, BankAccountType, UserBankAccount, UserAddress
 from .constants import GENDER_CHOICE
 
 from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm
 
+
+class Capitalize(forms.CharField):
+    def to_python(self, value):
+        return value.capitalize()
 
 class UserAddressForm(forms.ModelForm):
 
@@ -44,6 +50,24 @@ class UserRegistrationForm(UserCreationForm):
                 'data-mask': '(+00) 000-000-0000'
                 }
     ))
+
+
+    first_name = Capitalize(
+        max_length=100,
+        validators=[
+                RegexValidator(r'^[a-zA-ZÀ-ÿ\s]*$', message='Only letters are allowed'),
+                ],
+        widget=forms.TextInput(attrs={'placeholder': 'Firstname'}),
+        label="First name",
+    )
+    last_name = Capitalize(
+        max_length=100,
+        validators=[
+                RegexValidator(r'^[a-zA-ZÀ-ÿ\s]*$', message='Only letters are allowed'),
+                ],
+        widget=forms.TextInput(attrs={'placeholder': 'Lastname'}),
+        label="Last name"
+    )
 
     class Meta:
         model = User

@@ -1,5 +1,5 @@
 {% extends 'core/_main_layout.html' %}
-
+{% load crispy_forms_tags %}
 
 {% block header_title %}Transfer Money{% endblock %}
 {% block content %}
@@ -7,7 +7,12 @@
 <h2 class='transfer-title'>Transfer Money</h2>
 <form method="post" class="d-flex flex-column w-100">
     {% csrf_token %}
-    {{ form.as_p }}
+
+    
+    <div class="col-12 col-md-6">
+      {{ form|crispy }}
+    </div> 
+
     <button type="submit" class="transfer-btn">
         <div class="svg-wrapper-1">
           <div class="svg-wrapper">

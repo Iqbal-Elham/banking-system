@@ -12,15 +12,13 @@
 
     /* Print-specific styles */
     @media print {
-        body *:not(.transaction-table) {
-            display: none;
+        body {
+            font-size: 12pt;
         }
-        
-        /* Show the table and apply print-specific styles */
-        .transaction-table {
-            display: block;
-            margin: 20px auto; /* Add any desired styling for the table */
+        .dashboard-content {
+            padding: 20px;
         }
+        /* Add more print styles here */
     }
 </style> {% endcomment %}
 
@@ -30,7 +28,9 @@
 {% block content %}
 <div class="dashboard-content">
         <h1 class="">Transactions Report</h1>
-        <a href="{% url 'transactions:print_transactions' %}" target="_blank" class="d-flex align-items-center justify-content-end"><i class='bx bxs-printer h2 text-dark'></i> Print Transactions</a>
+        <div class="d-flex align-items-center justify-content-end">
+            <a href="{% url 'transactions:print_transactions' %}" target="_blank"><i class='bx bxs-printer h2 text-dark'></i> Print Transactions</a>
+        </div>
         {% comment %} <a href="#" id="print-button" class="btn btn-primary">Print Table</a> {% endcomment %}
         <hr />
         <form method="get">
@@ -82,12 +82,21 @@
         // Your existing code for date range picker initialization
 
         $('#print-button').on('click', function () {
-            // Hide everything except the table when printing
-            $('body *:not(.transaction-table)').hide();
+            // Store the current state of the body's overflow property
+            var originalOverflow = $('body').css('overflow');
+            // Set overflow to "hidden" to hide scrollbars temporarily
+            $('body').css('overflow', 'hidden');
+
+            // Hide everything except the table
+            $('body > :not(.dashboard-content)').hide();
+            $('.dashboard-content').css('visibility', 'visible');
+
             // Print the table
             window.print();
-            // Show all elements after printing is done
-            $('body *').show();
+
+            // Restore the original state after printing is done
+            $('body').css('overflow', originalOverflow);
+            $('body > :not(.dashboard-content)').show();
         });
     });
 </script> {% endcomment %}

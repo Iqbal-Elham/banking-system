@@ -11,6 +11,7 @@ from django.template.loader import render_to_string
 from django.conf import settings
 
 
+
 @receiver(post_save, sender=Transaction)
 def send_transaction_email(sender, instance, created, **kwargs):
     if created:
@@ -72,3 +73,4 @@ def send_transaction_email(sender, instance, created, **kwargs):
 
             except TransferMoney.DoesNotExist:
                 pass
+    

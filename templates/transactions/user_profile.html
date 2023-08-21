@@ -69,8 +69,10 @@
                     <p><strong>Address: &nbsp;</strong> {{ user.address.street_address }}, {{ user.address.city }}, {{ user.address.country }}</p>
                     <p><strong>Postal code: &nbsp;</strong> {{ user.address.postal_code }}</p>
                 </div>
-                <p class="text-end mx-3">
-                    <a href="{% url 'transactions:edit_profile' %}" class="search-btn p-2 text-dark"><i class='bx bxs-edit h4' ></i>Edit my profile</a>
+                <p class=" w-100 d-flex justify-content-end">
+                    <a href="{% url 'transactions:edit_profile' %}" class="change-pass-btn mt-4 edit-btn">
+                            <span>Edit my profile</span>
+                    </a>
                 </p>
             </div>
         </div>

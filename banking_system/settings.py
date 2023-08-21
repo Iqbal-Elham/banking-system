@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'accounts',
     'banking_app',
     'transactions',
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -221,3 +223,6 @@ TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
 TWILIO_PHONE_NUMBER = os.environ.get('TWILIO_PHONE_NUMBER')
 
 JAZZMIN_SETTINGS = JAZZMIN_SETTINGS
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

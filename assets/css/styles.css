@@ -880,11 +880,9 @@ html {
 
 #chip,
 #contactless {
-
   display: none;
-
 }
 
- 
- 
- 
+.edit-btn {
+  width: 25% !important;
+}
