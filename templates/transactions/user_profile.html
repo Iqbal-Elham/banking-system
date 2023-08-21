@@ -27,16 +27,15 @@
                 <aside class="card-front">
                     <p class="number">
                         Account number: {{ user.account.account_no }}
-                        <p class="text-white m-2" for="">
-                             Account type: {{ user.account.account_type.name }}
-                         </p>
+                       
                     </p>
                     
                 <p class="name" for="cardHolder">
                    Your Balance: AFN {{ user.account.balance }}
                 </p>
                 <label class="expiry" for="expiryMonth" >
-                    {{ user.account.initial_deposit_date }}
+                        Account type:<br> {{ user.account.account_type.name }}
+                   
                 </label>
                 <img class="cardLogo" data-v-5d206127="" data-v-8fcb32d4="" style="opacity: 1;" src="https://simey-credit-card.netlify.app/img/logos/master.svg">
                 
