@@ -30,6 +30,19 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
 
+from twilio.rest import Client
+from django.conf import settings
+
+def send_sms(to, body):
+    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+    message = client.messages.create(
+        body=body,
+        from_=settings.TWILIO_PHONE_NUMBER,
+        to=to
+    )
+    return message.sid
+
+
 class TransactionRepostView(LoginRequiredMixin, ListView):
     template_name = 'transactions/transactions_report.html'
     model = Transaction
@@ -110,6 +123,11 @@ class DepositMoneyView(TransactionCreateMixin):
             ]
         )
 
+        # recipient_number = account.phone_number
+        # recipient_number = '+93765181256'
+        # sms_body = f'You have successfully deposited ${amount}. Your new balance is ${account.balance}.'
+        # send_sms(recipient_number, sms_body)
+
         messages.success(
             self.request,
             f'{amount}$ was deposited to your account successfully'
@@ -128,10 +146,16 @@ class WithdrawMoneyView(TransactionCreateMixin):
 
     def form_valid(self, form):
         amount = form.cleaned_data.get('amount')
+        account = self.request.user.account
 
         self.request.user.account.balance -= form.cleaned_data.get('amount')
         self.request.user.account.save(update_fields=['balance'])
 
+
+        # recipient_number = account.user.phone_number
+        # recipient_number = '+93765181256'
+        # sms_body = f'You have successfully withdrawn {amount} AFN. Your new balance is {account.balance} AFN.'
+        # send_sms(recipient_number, sms_body)
 
         messages.success(
             self.request,
@@ -256,7 +280,7 @@ def print_transactions_pdf(request):
             ['Full name:', user_account.get_full_name()],
             ['Email:', user_account.email],
             ['User Account Number:', user_account.account.account_no],
-            ['Bank:', 'Banker, The first digital banking system'],
+            ['Bank:', 'The Banker, The First Digital Banking System'],
         ]
     except UserBankAccount.DoesNotExist:
         account_details = []

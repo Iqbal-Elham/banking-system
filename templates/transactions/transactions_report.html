@@ -6,6 +6,24 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+{% comment %} <style>
+    /* Your existing styles */
+
+    /* Print-specific styles */
+    @media print {
+        body *:not(.transaction-table) {
+            display: none;
+        }
+        
+        /* Show the table and apply print-specific styles */
+        .transaction-table {
+            display: block;
+            margin: 20px auto; /* Add any desired styling for the table */
+        }
+    }
+</style> {% endcomment %}
+
 {% endblock %}
 
 {% block header_title %}Transactions Report{% endblock %}
@@ -13,6 +31,7 @@
 <div class="dashboard-content">
         <h1 class="">Transactions Report</h1>
         <a href="{% url 'transactions:print_transactions' %}" target="_blank" class="d-flex align-items-center justify-content-end"><i class='bx bxs-printer h2 text-dark'></i> Print Transactions</a>
+        {% comment %} <a href="#" id="print-button" class="btn btn-primary">Print Table</a> {% endcomment %}
         <hr />
         <form method="get">
             <div class="search-container">
@@ -57,6 +76,22 @@
 {% endblock %}
 
 {% block footer_extra %}
+
+{% comment %} <script type="text/javascript">
+    $(function () {
+        // Your existing code for date range picker initialization
+
+        $('#print-button').on('click', function () {
+            // Hide everything except the table when printing
+            $('body *:not(.transaction-table)').hide();
+            // Print the table
+            window.print();
+            // Show all elements after printing is done
+            $('body *').show();
+        });
+    });
+</script> {% endcomment %}
+
 <script type="text/javascript">
     $(function () {
         $('input[name="daterange"]').daterangepicker({
