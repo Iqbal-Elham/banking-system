@@ -1,0 +1,11 @@
+{% for message in messages %}
+<script>
+    console.log('helloo');
+    Swal.fire({
+      icon: 'success',
+      title: 'Success',
+      text: '{{message}}',
+    });
+  </script>
+{% endfor %}
+

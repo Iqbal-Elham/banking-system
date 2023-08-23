@@ -1,24 +1,30 @@
 {% extends 'core/_main_layout.html' %}
-
+{% load crispy_forms_tags %}
 
 {% block header_title %}Transfer Money{% endblock %}
 {% block content %}
 <div class="dashboard-content">
-<h2 class='transfer-title'>Transfer Money</h2>
-<form method="post" class="d-flex flex-column w-100">
+<h1 class='transfer-title'>Transfer Money</h1>
+<hr>
+<form method="post" class="d-flex flex-column col-12 col-md-6">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="transfer-btn">
-        <div class="svg-wrapper-1">
-          <div class="svg-wrapper">
-            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z" fill="currentColor"></path>
-            </svg>
-          </div>
+
+    
+    <div class="">
+      {{ form|crispy }}
+    </div> 
+    <button type="submit" class="transfer-btn w-50">
+      <div class="svg-wrapper-1">
+        <div class="svg-wrapper">
+          <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z" fill="currentColor"></path>
+          </svg>
         </div>
-        <span>Transfer</span>
-      </button>
+      </div>
+      <span>Transfer</span>
+    </button>
+
 </form>
 </div>
 {% endblock %}

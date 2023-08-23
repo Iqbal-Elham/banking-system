@@ -78,11 +78,9 @@ class TransactionDateRangeForm(forms.Form):
 
     def clean_daterange(self):
         daterange = self.cleaned_data.get("daterange")
-        print(daterange)
 
         try:
             daterange = daterange.split(' - ')
-            print(daterange)
             if len(daterange) == 2:
                 for date in daterange:
                     datetime.datetime.strptime(date, '%Y-%m-%d')
@@ -93,9 +91,29 @@ class TransactionDateRangeForm(forms.Form):
             raise forms.ValidationError("Invalid date range")
 
 class TransferForm(forms.Form):
-    recipient_account_number = forms.CharField(label='Recipient Account Number', widget=forms.TextInput(attrs={'class': 'inp d-block'}))
-    recipient_name = forms.CharField(label='Recipient Name', widget=forms.TextInput(attrs={'class': 'inp d-block'}))
-    amount = forms.DecimalField(label='Amount', widget=forms.TextInput(attrs={'class': 'inp d-block'}))
+    recipient_account_number = forms.CharField(label='Recipient Account Number', widget=forms.TextInput(attrs={}))
+    recipient_name = forms.CharField(label='Recipient Name', widget=forms.TextInput(attrs={'class': ''}))
+    amount = forms.DecimalField(label='Amount', widget=forms.TextInput(attrs={'class': ''}))
+
+    def clean_recipient_account_number(self):
+        recipient_account_number = self.cleaned_data['recipient_account_number']
+        if not UserBankAccount.objects.filter(account_no=recipient_account_number).exists():
+            raise forms.ValidationError("This Account Number does not exist.")
+        return recipient_account_number
+
+    def clean_recipient_name(self):
+        recipient_name = self.cleaned_data['recipient_name']
+        if not User.objects.filter(first_name=recipient_name.title()).exists():
+            raise forms.ValidationError("This Name does not exist.")
+        return recipient_name
+
+    def clean_amount(self):
+        amount = self.cleaned_data.get("amount")
+        if amount < 0:
+            raise forms.ValidationError("The amount cannot be negative")
+        return amount
+
+
 
 
 class bootstrapStyleMixin:
