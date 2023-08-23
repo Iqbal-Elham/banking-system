@@ -1,4 +1,5 @@
 {% extends 'core/_main_layout.html' %}
+{% load crispy_forms_tags %}
 {% block title %}{{ title }}{% endblock %}
 
 {% block header_title %}{{title}}{% endblock %}
@@ -12,15 +13,16 @@
 
         <div class="mb-4">
             <label class="mb-3 mx-2 h4" for="amount">
-                Amount Of Money
+                Please enter the amount of money you want to:
             </label>
-            <input class="inp d-block w-100" name="amount" id="amount" type="number" required placeholder="Amount">
+            {{form|crispy}}
+            {% comment %} <input class="inp d-block w-100" name="amount" id="amount" type="number" required placeholder="Amount"> {% endcomment %}
         </div>
-        {% if form.amount.errors %}
+        {% comment %} {% if form.amount.errors %}
             {% for error in form.amount.errors %}
                 <p class="">{{ error }}</p>
             {% endfor %}
-        {% endif %}
+        {% endif %} {% endcomment %}
 
             <button type="submit" class="transfer-btn w-50">
                 <div class="svg-wrapper-1">

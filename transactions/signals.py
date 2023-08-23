@@ -43,7 +43,7 @@ def send_transaction_email(sender, instance, created, **kwargs):
                 
                 email.content_subtype = "html"
 
-                email.send()
+                # email.send()
 
             except TransferMoney.DoesNotExist:
                 pass
@@ -69,7 +69,7 @@ def send_transaction_email(sender, instance, created, **kwargs):
                 
                 email.content_subtype = "html"
 
-                email.send()
+                # email.send()
 
             except TransferMoney.DoesNotExist:
                 pass

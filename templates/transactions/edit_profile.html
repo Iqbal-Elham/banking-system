@@ -9,11 +9,11 @@
     {% csrf_token %}
            <div class="w-50">
             {{ form.as_p }}
-            {{ address_form.as_p }}
-           </div>
-           
-           <div class="w-50">
             {{ account_form.as_p }}
+        </div>
+        
+        <div class="w-50">
+            {{ address_form.as_p }}
             <button class="change-pass-btn mt-4 mx-auto" type="submit">
                 <span>Save Changes</span>
             </button>

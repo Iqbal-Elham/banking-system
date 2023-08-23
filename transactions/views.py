@@ -125,12 +125,12 @@ class DepositMoneyView(TransactionCreateMixin):
 
         # recipient_number = account.phone_number
         # recipient_number = '+93765181256'
-        # sms_body = f'You have successfully deposited ${amount}. Your new balance is ${account.balance}.'
+        # sms_body = f'You have successfully deposited  AFN{amount}. Your new balance is  AFN{account.balance}.'
         # send_sms(recipient_number, sms_body)
 
         messages.success(
             self.request,
-            f'{amount}$ was deposited to your account successfully'
+            f'{amount} AFN was deposited to your account successfully'
         )
 
         return super().form_valid(form)
@@ -159,7 +159,7 @@ class WithdrawMoneyView(TransactionCreateMixin):
 
         messages.success(
             self.request,
-            f'Successfully withdrawn {amount}$ from your account'
+            f'Successfully withdrawn {amount} AFN from your account'
         )
 
         return super().form_valid(form)
@@ -252,7 +252,7 @@ def TransferMoneyView(request):
 
                 messages.success(
                     request,
-                    f'Successfully transferred {amount}$ to {recipient_name}\'s account'
+                    f'Successfully transferred {amount} AFN to {recipient_name}\'s account'
                 )
 
                 return redirect('transactions:transaction_report')
