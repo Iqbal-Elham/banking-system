@@ -11,7 +11,7 @@
                 <img src="{{ user.profile_photo.url }}" alt="Profile Photo" width="250" class="img-fluid" >
             </div>
             <hr>
-            <div>
+            <div class="px-4">
                 <p class="d-flex justify-content-between"><strong>First name:</strong> {{ user.first_name }}</p>
                 <p class="d-flex justify-content-between"><strong>Last name:</strong> {{ user.last_name }}</p>
                 <p class="d-flex justify-content-between"><strong>Birth Date:</strong> {{ user.account.birth_date }}</p>
@@ -52,7 +52,7 @@
             
             <div class="other-info">
                 <h2>Contact Information</h2>
-                <div class="contact-info">
+                <div class="contact-info p-4">
                     <p><strong>Email: &nbsp;</strong> {{ user.email }}</p>
                     <p><strong>Phone Number: &nbsp;</strong> {{ user.account.phone_number }}</p>
                     <p><strong>Address: &nbsp;</strong> {{ user.address.street_address }}, {{ user.address.city }}, {{ user.address.country }}</p>

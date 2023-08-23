@@ -1,4 +1,5 @@
 {% extends 'core/_main_layout.html' %}
+{% load static %}
 {% block title %}Transaction Report{% endblock %}
 
 {% block head_extra %}
@@ -7,21 +8,6 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-{% comment %} <style>
-    /* Your existing styles */
-
-    /* Print-specific styles */
-    @media print {
-        body {
-            font-size: 12pt;
-        }
-        .dashboard-content {
-            padding: 20px;
-        }
-        /* Add more print styles here */
-    }
-</style> {% endcomment %}
-
 {% endblock %}
 
 {% block header_title %}Transactions Report{% endblock %}
@@ -29,13 +15,12 @@
 <div class="dashboard-content">
         <h1 class="">Transactions Report</h1>
         <div class="d-flex align-items-center justify-content-end">
-            <a href="{% url 'transactions:print_transactions' %}" target="_blank"><i class='bx bxs-printer h2 text-dark'></i> Print Transactions</a>
+            <a class="btn btn-dark d-flex align-items-center h1" id="print-button"><i class='bx bxs-printer text-light' ></i> Print Statement</a>
         </div>
-        {% comment %} <a href="#" id="print-button" class="btn btn-primary">Print Table</a> {% endcomment %}
         <hr />
         <form method="get">
             <div class="search-container">
-                <input type="search" name="daterange" id="search" placeholder="Filter using date range" value="{{ request.GET.daterange }}" class="" />
+                <input type="search" name="daterange" id="search" placeholder="Filter using date range" value="{{ request.GET.daterange }}" />
                 <button type="submit" class="search-btn">
                     <i class="fa fa-search">Search</i>
                 </button>
@@ -46,7 +31,7 @@
                 {% endfor %}
             {% endif %}
         </form>
-        <div class="transaction-table">
+        <div class="transaction-table" id="print-section">
         <table class="table table-striped">
             <thead class="">
             <tr class="">
@@ -77,29 +62,61 @@
 
 {% block footer_extra %}
 
-{% comment %} <script type="text/javascript">
-    $(function () {
-        // Your existing code for date range picker initialization
+<script>
+    document.getElementById('print-button').addEventListener('click', function() {
+        // Get the content of the print-section div
+        var printContent = document.getElementById('print-section').innerHTML;
 
-        $('#print-button').on('click', function () {
-            // Store the current state of the body's overflow property
-            var originalOverflow = $('body').css('overflow');
-            // Set overflow to "hidden" to hide scrollbars temporarily
-            $('body').css('overflow', 'hidden');
+         // Get the date range input value
+         var dateRangeInput = document.getElementById('search').value;
+        
+        // Create a new window for printing
+        var printWindow = window.open('', '', 'width=600,height=600');
+        printWindow.document.write('<html><head><title>Transactions</title>');
+        // Add styles for the printed table and additional elements
+        printWindow.document.write('<style>');
+        printWindow.document.write('body { font-family: Arial, sans-serif; color: black; }');
+        printWindow.document.write('h2 { color: black; text-align: center; margin-bottom: 20px; }');
+        printWindow.document.write('.user-info { color: black; margin-bottom: 20px; }');
+        printWindow.document.write('table { border-collapse: collapse; width: 100%;}');
+        printWindow.document.write('th, td { border: 1px solid black; padding: 8px; text-align: left; }');
+        printWindow.document.write('th { background-color: #3498db; color:white; font-weight: bold;}');
+        printWindow.document.write('.logo-container { position: absolute; top: 20px; right: 50px; display:flex; flex-direction:column; align-items: center; }');
+        printWindow.document.write('.logo { width: 50px; height: 50px; filter: invert(100%);}');
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head><body>');
 
-            // Hide everything except the table
-            $('body > :not(.dashboard-content)').hide();
-            $('.dashboard-content').css('visibility', 'visible');
+        // Add logo
+        printWindow.document.write('<div class="logo-container">');
+        printWindow.document.write('<img class="logo" src="{% static 'img/logo.png' %}" alt="Logo">');
+        printWindow.document.write('<p>The Banker</p>');
+        printWindow.document.write('</div>');
+        
+        // Add title
+        printWindow.document.write('<h2>Bank Statement</h2>');
 
-            // Print the table
-            window.print();
-
-            // Restore the original state after printing is done
-            $('body').css('overflow', originalOverflow);
-            $('body > :not(.dashboard-content)').show();
-        });
+         // Add date range
+         printWindow.document.write('<p><strong>Date Range:</strong> ' + dateRangeInput + '</p>');
+        
+        // Add user information
+        printWindow.document.write('<div class="user-info">');
+        printWindow.document.write('<p><strong>Name:</strong> {{ user.get_full_name }}</p>');
+        printWindow.document.write('<p><strong>Email:</strong> {{ user.email }}</p>');
+        printWindow.document.write('<p><strong>User Account:</strong> {{ user.account.account_no }}</p>');
+        printWindow.document.write('</div>');
+        
+        // Add table content
+        printWindow.document.write('<table>');
+        printWindow.document.write(printContent);
+        printWindow.document.write('</table>');
+        
+        printWindow.document.write('</body></html>');
+        
+        // Print the content and close the new window
+        printWindow.document.close();
+        printWindow.print();
     });
-</script> {% endcomment %}
+</script>
 
 <script type="text/javascript">
     $(function () {
