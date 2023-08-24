@@ -33,6 +33,8 @@ from django.conf import settings
 from twilio.rest import Client
 from django.conf import settings
 
+from django.db.models import Q
+
 def send_sms(to, body):
     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
     message = client.messages.create(
@@ -45,7 +47,7 @@ def send_sms(to, body):
 
 class TransactionRepostView(LoginRequiredMixin, ListView):
     template_name = 'transactions/transactions_report.html'
-    model = Transaction
+    model = Transaction  # Use the Transaction model
     form_data = {}
 
     def get(self, request, *args, **kwargs):
@@ -56,16 +58,31 @@ class TransactionRepostView(LoginRequiredMixin, ListView):
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(
+        all_items = []
+        transactions = Transaction.objects.filter(
             account=self.request.user.account
         )
+        all_items.extend(list(transactions))
+        transfer_transactions = TransferMoney.objects.filter(
+            Q(sender__user=self.request.user) | Q(recipient__user=self.request.user)
+        )
+
+        all_items.extend(list(transfer_transactions))
+
+
+        print(list(transactions))
+        print('-------------------')
+        print(list(transfer_transactions))
+        all_items.sort(key=lambda x: x.timestamp, reverse=True)
 
         daterange = self.form_data.get("daterange")
 
         if daterange:
-            queryset = queryset.filter(timestamp__date__range=daterange)
+            all_items = [item for item in all_items if item.timestamp.date() in daterange]
 
-        return queryset.distinct()
+        print(all_items)
+
+        return all_items
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -184,19 +201,22 @@ def TransferMoneyView(request):
                 sender_account.balance -= amount
                 recipient_account.balance += amount
 
-                Transaction.objects.create(
+                sender_transaction = Transaction.objects.create(
                     account=sender_account,
                     amount=amount,
                     balance_after_transaction=sender_account.balance, 
                     transaction_type=TRANSFER
-                    )
+                )
 
-                Transaction.objects.create(
+                # Create recipient transaction
+                recipient_transaction = Transaction.objects.create(
                     account=recipient_account,
                     amount=amount,
                     balance_after_transaction=recipient_account.balance, 
                     transaction_type=RECEIVER
-                    )
+                )
+
+              
 
                 sender_account.save()
                 recipient_account.save()
