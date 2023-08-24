@@ -14,7 +14,7 @@ from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, Set
 
 class Capitalize(forms.CharField):
     def to_python(self, value):
-        return value.capitalize()
+        return value.title()
 
 class UserAddressForm(forms.ModelForm):
 
