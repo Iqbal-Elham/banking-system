@@ -1,11 +1,19 @@
 {% for message in messages %}
-<script>
-    console.log('helloo');
-    Swal.fire({
-      icon: 'success',
-      title: 'Success',
-      text: '{{message}}',
-    });
-  </script>
+  {% if message.tags == 'success' %}
+    <script>
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: '{{ message }}',
+      });
+    </script>
+  {% elif message.tags == 'error' %}
+    <script>
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '{{ message }}',
+      });
+    </script>
+  {% endif %}
 {% endfor %}
-

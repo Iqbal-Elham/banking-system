@@ -64,6 +64,8 @@ class TransactionRepostView(LoginRequiredMixin, ListView):
 
         if daterange:
             queryset = queryset.filter(timestamp__date__range=daterange)
+        
+        queryset = queryset.order_by('-timestamp')
 
         return queryset.distinct()
 
@@ -179,6 +181,10 @@ def TransferMoneyView(request):
                 recipient_account = UserBankAccount.objects.get(account_no=recipient_account_number)
             except UserBankAccount.DoesNotExist:
                 return HttpResponse("Account not found.")
+            
+            if sender_account == recipient_account:
+                messages.error(request, "You cannot transfer money to your own account.")
+                return redirect('transactions:transfer_money')
 
             if sender_account.balance >= amount:
                 sender_account.balance -= amount
@@ -188,14 +194,18 @@ def TransferMoneyView(request):
                     account=sender_account,
                     amount=amount,
                     balance_after_transaction=sender_account.balance, 
-                    transaction_type=TRANSFER
+                    transaction_type=TRANSFER,
+                    sender_name=f'{sender_account.user.first_name} {sender_account.user.last_name}',
+                    receiver_name=f'{recipient_account.user.first_name} {recipient_account.user.last_name}'
                     )
 
                 Transaction.objects.create(
                     account=recipient_account,
                     amount=amount,
                     balance_after_transaction=recipient_account.balance, 
-                    transaction_type=RECEIVER
+                    transaction_type=RECEIVER,
+                    sender_name=f'{sender_account.user.first_name} {sender_account.user.last_name}',
+                    receiver_name=f'{recipient_account.user.first_name} {recipient_account.user.last_name}'               
                     )
 
                 sender_account.save()
@@ -223,7 +233,7 @@ def TransferMoneyView(request):
                 
                 email.content_subtype = "html"
 
-                email.send()
+                # email.send()
 
                 # Send email to recipient
                 recipient_subject = 'Received Money Notification'
@@ -245,7 +255,7 @@ def TransferMoneyView(request):
                 
                 email.content_subtype = "html"
 
-                email.send()
+                # email.send()
                 
 
                 TransferMoney.objects.create(sender=sender_account, recipient=recipient_account, amount=amount)
