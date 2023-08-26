@@ -33,6 +33,123 @@ from django.conf import settings
 from twilio.rest import Client
 from django.conf import settings
 
+from django.http import JsonResponse
+from .utils import get_currency_exchange_rate, convert_currency, get_country_info
+import requests
+import threading
+from django.core.cache import cache
+
+import requests
+from django.shortcuts import render
+
+def get_country_info(restcountries_data, currency_code):
+    for country in restcountries_data:
+        currencies = country.get("currencies", {})
+        if currency_code in currencies:
+            return {
+                "name": country.get("name", {}).get("common", ""),
+                "currency_name": currencies.get(currency_code, {}).get("name", ""),
+                "flag_url": country.get("flags", {}).get("png", "") if country.get("flags", {}) else ""
+            }
+    return {}
+
+def currency_exchange(request):
+    base_currency = "AFN"
+    target_currencies = ["AED", "AFN", "AUD", "CAD", "CHF", "EUR", "GBP", "INR", "PKR", "NOK"]
+
+    forex_api_url = "https://api.fastforex.io/fetch-all?api_key=ec683d1e20-46e31aa18c-rzztbe"
+    restcountries_api_url = "https://restcountries.com/v3.1/all"
+
+    selected_currency = None  # Initialize selected_currency to None
+
+    if request.method == "GET":
+        selected_currency = request.GET.get("currency")  # Capture selected currency from the form
+
+    try:
+        forex_response = requests.get(forex_api_url)
+        restcountries_response = requests.get(restcountries_api_url)
+
+        if forex_response.status_code == 200 and restcountries_response.status_code == 200:
+            forex_data = forex_response.json()
+            base_currency = forex_data["base"]
+            exchange_rates = forex_data["results"]
+
+            restcountries_data = restcountries_response.json()
+
+            top_currencies = []
+            afn_exchange_rate = exchange_rates["AFN"]  # Get AFN exchange rate
+            
+            for currency_code in target_currencies:
+                if currency_code in exchange_rates:
+                    exchange_rate = exchange_rates[currency_code]
+                    country_info = get_country_info(restcountries_data, currency_code)
+                    if country_info:
+                        afn_equivalent = afn_exchange_rate / exchange_rate  # Calculate AFN equivalent
+                        top_currencies.append({
+                            "currency_code": currency_code,
+                            "exchange_rate": exchange_rate,
+                            "afn_equivalent": afn_equivalent,  # Add AFN equivalent
+                            "country_name": country_info["name"],
+                            "currency_name": country_info["currency_name"],
+                            "flag_url": country_info["flag_url"]
+                        })
+
+            context = {
+                "base_currency": base_currency,
+                "top_currencies": top_currencies,
+                "selected_currency": selected_currency,  # Pass the selected currency
+            }
+
+            return render(request, "home/currencies.html", context)
+
+        else:
+            return render(request, "home/error.html", {"error_message": "Failed to fetch data."})
+
+    except requests.exceptions.RequestException as e:
+        return render(request, "home/error.html", {"error_message": str(e)})
+
+# def currency_exchange(request):
+#     popular_currencies = [
+#         "USD", "EUR", "JPY", "GBP", "AUD", "CAD", "CHF", "CNY", "SEK", "NZD", "AFN"
+#     ]
+#     api_url = "https://api.fastforex.io/fetch-all?api_key=ec683d1e20-46e31aa18c-rzztbe"
+#     response = requests.get(api_url)
+#     data = response.json()
+#     currency_rates = data["results"]
+
+#     if request.method == "POST":
+
+#         source_currency = request.POST["source_currency"]
+#         target_currency = request.POST["target_currency"]
+
+#         exchange_rate = None
+#         if target_currency in data["results"] and source_currency in data["results"]:
+#             exchange_rate = data["results"][target_currency] / data["results"][source_currency]
+
+#         currency_rates = data["results"]
+        
+#         return render(
+#             request,
+#             "transactions/currencies.html",
+#             {
+#                 "popular_currencies": popular_currencies,
+#                 "currency_rates": currency_rates,  # Pass the currency_rates dictionary
+#                 "exchange_rate": exchange_rate,
+#             },
+#         )
+    
+#     return render(
+#         request,
+#         "transactions/currencies.html",
+#         {
+#                 "popular_currencies": popular_currencies,
+#                 "currency_rates": currency_rates,
+#         },
+#     )
+
+
+
+
 def send_sms(to, body):
     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
     message = client.messages.create(

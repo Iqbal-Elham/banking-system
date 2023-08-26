@@ -7,7 +7,8 @@ from .views import (
     TransferMoneyView, 
     UserProfileView, 
     print_transactions_pdf,
-    EditUserProfileView
+    EditUserProfileView,
+    currency_exchange,
 )
 
 app_name = 'transactions'
@@ -21,4 +22,6 @@ urlpatterns = [
     path("profile/", UserProfileView, name="user_profile"),
     path('print_transactions/', print_transactions_pdf, name='print_transactions'),
     path('edit-profile/', EditUserProfileView.as_view(), name='edit_profile'),
+    path("currency-exchange/", currency_exchange, name="currency_exchange"),
+    
 ]
