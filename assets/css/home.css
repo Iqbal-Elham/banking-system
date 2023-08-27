@@ -36,11 +36,11 @@ h1 {
 .home-container {
   width: 50%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   place-items: center;
-  grid-gap: 0.8rem;
+  grid-gap: 1rem;
   padding: 0 1rem;
-  margin: 0 auto;
+  margin: 1rem auto;
 }
 
 .items {
@@ -55,11 +55,11 @@ h1 {
   font-size: 12px;
 }
 
-.items:last-child {
+/* .items:last-child {
   grid-column: 2 / 3;
   justify-self: center;
   align-self: center;
-}
+} */
 
 .icons {
   width: 90px;
@@ -92,9 +92,9 @@ h1 {
     width: 120px;
     height: 120px;
   }
-  .items:last-child {
+  /* .items:last-child {
     grid-column: 1 / 2;
-  }
+  } */
 }
 
 /* Responsive adjustments for phone */
@@ -111,8 +111,8 @@ h1 {
     place-items: center;
   }
   .icons {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
   }
 }
 

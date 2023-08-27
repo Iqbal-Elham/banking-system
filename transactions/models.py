@@ -19,6 +19,9 @@ class Transaction(models.Model):
     transaction_type = models.PositiveSmallIntegerField(
         choices=TRANSACTION_TYPE_CHOICES
     )
+    sender_name=models.CharField(max_length=150, null=True, blank=True)
+    receiver_name=models.CharField(max_length=150, null=True, blank=True)
+
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

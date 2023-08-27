@@ -37,6 +37,8 @@
             <tr class="">
                 <th class="">Transaction Type</th>
                 <th class="">Date</th>
+                <th class="">Transfer from</th>
+                <th class="">Transfer to</th>
                 <th class="">Amount</th>
                 <th class="">Balance After Transaction</th>
             </tr>
@@ -46,12 +48,26 @@
             <tr class="{% cycle 'bg-gray-300' 'bg-white-100' %}">
                 <td class="">{{ transaction.get_transaction_type_display }}</td>
                 <td class="">{{ transaction.timestamp }}</td>
+                <td>
+                    {% if transaction.get_transaction_type_display == 'Transfered' or transaction.get_transaction_type_display == 'Received' %}  {# 1 is Transfer Transaction #}
+                            {{ transaction.sender_name }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                </td>
+                <td>
+                    {% if transaction.get_transaction_type_display == 'Transfered' or transaction.get_transaction_type_display == 'Received' %}  {# 1 is Transfer Transaction #}
+                            {{ transaction.receiver_name }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
                 <td class="">{{ transaction.amount }} AFN</td>
                 <td class="">{{ transaction.balance_after_transaction }} AFN</td>
             </tr>
             {% endfor %}
             <tr class="">
-                <th class="" colspan="3">Final Balance</th>
+                <th class="" colspan="5">Final Balance</th>
                 <th class="">{{ account.balance }} AFN</th>
             </tr>
             </tbody>

@@ -1,0 +1,70 @@
+{% extends 'home/_base.html' %} {% load static %} {% block content %}
+<div class="contact-container w-50">
+  <a href="/"><i class="bx bx-x-circle x-icon"></i></a>
+  <h2 class="text-center">Currency Exchange</h2>
+  <form method="GET">
+    <div class="form-group">
+      <label for="currency">Select Currency:</label>
+      <select name="currency" id="currency" class="form-control">
+        <option value="" selected disabled>Select a currency</option>
+        {% for currency in top_currencies %}
+        <option value="{{ currency.currency_code }}">
+          {{ currency.currency_name }} ({{ currency.currency_code }})
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3 w-100 mx-auto">
+      Get Exchange Rate
+    </button>
+  </form>
+
+  <div class="gap-2 mt-4 border shadow p-4">
+      <div>
+        {% if selected_currency %}
+        {% for currency in top_currencies %}
+        {% if currency.currency_code == selected_currency %}
+            <div class="d-flex justify-content-around align-items-center flex-column flex-lg-row">
+                    <div>
+                    <h4 class="mb-3">Exchange Rate</h4>
+                    <p>
+                      1 <strong>{{ currency.currency_code }}</strong> = {{ currency.exchange_rate|floatformat:2 }} {{base_currency }}
+                    </p>
+                    <p>1 <strong>{{ currency.currency_code }}</strong> = {{ currency.afn_equivalent|floatformat:2 }} AFN</p>
+                  </div>
+                  
+                  <div>
+                    <h4 class="mb-4">Country Information</h4>
+                    <p><strong>Name:</strong> {{ currency.country_name }}</p>
+                    <p><strong>Currency:</strong> {{ currency.currency_name }}</p>
+                  </div>
+                  {% if currency.flag_url %}
+                    <img src="{{ currency.flag_url }}" alt="Flag" width="150" class="rounded shadow" >
+                  {% else %}
+                    <p>Flag not available</p>
+                  {% endif %} 
+                </div>
+
+
+              {% endif %} 
+            {% endfor %} 
+            {% endif %} 
+        </div>
+
+      {% comment %} <div>
+        {% if country_info %}
+        <h2>Country Information</h2>
+        <p>Name: {{ country_info.name }}</p>
+        <p>Currency: {{ country_info.currency_name }}</p>
+        {% if country_info.flag_url %}
+        <img src="{{ country_info.flag_url }}" alt="Flag" width="100" />
+        {% else %}
+        <p>Flag not available</p>
+        {% endif %} 
+        {% endif %}
+      </div> {% endcomment %}
+
+  </div>
+</div>
+
+{% endblock %}

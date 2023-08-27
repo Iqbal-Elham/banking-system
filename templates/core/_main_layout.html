@@ -36,9 +36,9 @@
       <h1 class="header-title">
         {% block header_title %} {% endblock header_title %}
       </h1>
-      <div class="header_img">
-        <img src="{{ user.profile_photo.url }}" alt="Profile Photo" />
-      </div>
+      <a class="header_img" href="{% url 'transactions:user_profile' %}">
+        <img src="{% if user.profile_photo %}{{ user.profile_photo.url }} {% else %} {% static 'img/Person-Icon.jpg'%} {% endif %}" alt="Profile Photo" />
+      </a>
     </header>
     <div class="l-navbar show" id="nav-bar">
       <nav class="nav">
@@ -104,30 +104,6 @@
         </a>
       </nav>
     </div>
-    {% comment %}
-    <div
-      class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md mt-2"
-      role="alert"
-    >
-      <div class="flex">
-        <div class="py-1">
-          <svg
-            class="fill-current h-6 w-6 text-teal-500 mr-4"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path
-              d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"
-            />
-          </svg>
-        </div>
-        <div>
-          <p class="font-bold">Success!</p>
-          <p class="text-sm">{{ message }}</p>
-        </div>
-      </div>
-    </div>
-    {% endcomment %} 
     {% include 'core/messages.html' %}
     {% block content %} 
     
