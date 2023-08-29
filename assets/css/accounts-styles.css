@@ -10,7 +10,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(10px);
 }
 .page-content {
   width: 100%;

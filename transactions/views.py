@@ -21,7 +21,6 @@ from .forms import TransferForm, UserEditForm, UserAddressEditForm, UserAccountE
 
 from accounts.models import User
 
-from django.core.mail import send_mail
 from io import BytesIO
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle,  Spacer
@@ -33,14 +32,21 @@ from django.conf import settings
 from twilio.rest import Client
 from django.conf import settings
 
-from django.http import JsonResponse
-from .utils import get_currency_exchange_rate, convert_currency, get_country_info
-import requests
-import threading
-from django.core.cache import cache
-
 import requests
 from django.shortcuts import render
+
+def send_sms(to, body):
+    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+    print("Twilio Account SID:", settings.TWILIO_ACCOUNT_SID)
+    print("Twilio Auth Token:", settings.TWILIO_AUTH_TOKEN)
+    print("Twilio Phone Number:", settings.TWILIO_PHONE_NUMBER)
+    message = client.messages.create(
+        body=body,
+        from_=settings.TWILIO_PHONE_NUMBER,
+        to=to
+    )
+    return message.sid
+
 
 def get_country_info(restcountries_data, currency_code):
     for country in restcountries_data:
@@ -60,10 +66,10 @@ def currency_exchange(request):
     forex_api_url = "https://api.fastforex.io/fetch-all?api_key=ec683d1e20-46e31aa18c-rzztbe"
     restcountries_api_url = "https://restcountries.com/v3.1/all"
 
-    selected_currency = None  # Initialize selected_currency to None
+    selected_currency = None 
 
     if request.method == "GET":
-        selected_currency = request.GET.get("currency")  # Capture selected currency from the form
+        selected_currency = request.GET.get("currency") 
 
     try:
         forex_response = requests.get(forex_api_url)
@@ -77,18 +83,18 @@ def currency_exchange(request):
             restcountries_data = restcountries_response.json()
 
             top_currencies = []
-            afn_exchange_rate = exchange_rates["AFN"]  # Get AFN exchange rate
+            afn_exchange_rate = exchange_rates["AFN"]  
             
             for currency_code in target_currencies:
                 if currency_code in exchange_rates:
                     exchange_rate = exchange_rates[currency_code]
                     country_info = get_country_info(restcountries_data, currency_code)
                     if country_info:
-                        afn_equivalent = afn_exchange_rate / exchange_rate  # Calculate AFN equivalent
+                        afn_equivalent = afn_exchange_rate / exchange_rate 
                         top_currencies.append({
                             "currency_code": currency_code,
                             "exchange_rate": exchange_rate,
-                            "afn_equivalent": afn_equivalent,  # Add AFN equivalent
+                            "afn_equivalent": afn_equivalent,  
                             "country_name": country_info["name"],
                             "currency_name": country_info["currency_name"],
                             "flag_url": country_info["flag_url"]
@@ -97,7 +103,7 @@ def currency_exchange(request):
             context = {
                 "base_currency": base_currency,
                 "top_currencies": top_currencies,
-                "selected_currency": selected_currency,  # Pass the selected currency
+                "selected_currency": selected_currency, 
             }
 
             return render(request, "home/currencies.html", context)
@@ -108,56 +114,7 @@ def currency_exchange(request):
     except requests.exceptions.RequestException as e:
         return render(request, "home/error.html", {"error_message": str(e)})
 
-# def currency_exchange(request):
-#     popular_currencies = [
-#         "USD", "EUR", "JPY", "GBP", "AUD", "CAD", "CHF", "CNY", "SEK", "NZD", "AFN"
-#     ]
-#     api_url = "https://api.fastforex.io/fetch-all?api_key=ec683d1e20-46e31aa18c-rzztbe"
-#     response = requests.get(api_url)
-#     data = response.json()
-#     currency_rates = data["results"]
 
-#     if request.method == "POST":
-
-#         source_currency = request.POST["source_currency"]
-#         target_currency = request.POST["target_currency"]
-
-#         exchange_rate = None
-#         if target_currency in data["results"] and source_currency in data["results"]:
-#             exchange_rate = data["results"][target_currency] / data["results"][source_currency]
-
-#         currency_rates = data["results"]
-        
-#         return render(
-#             request,
-#             "transactions/currencies.html",
-#             {
-#                 "popular_currencies": popular_currencies,
-#                 "currency_rates": currency_rates,  # Pass the currency_rates dictionary
-#                 "exchange_rate": exchange_rate,
-#             },
-#         )
-    
-#     return render(
-#         request,
-#         "transactions/currencies.html",
-#         {
-#                 "popular_currencies": popular_currencies,
-#                 "currency_rates": currency_rates,
-#         },
-#     )
-
-
-
-
-def send_sms(to, body):
-    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-    message = client.messages.create(
-        body=body,
-        from_=settings.TWILIO_PHONE_NUMBER,
-        to=to
-    )
-    return message.sid
 
 
 class TransactionRepostView(LoginRequiredMixin, ListView):
@@ -182,7 +139,7 @@ class TransactionRepostView(LoginRequiredMixin, ListView):
         if daterange:
             queryset = queryset.filter(timestamp__date__range=daterange)
         
-        queryset = queryset.order_by('-timestamp')
+        queryset = queryset.order_by('timestamp')
 
         return queryset.distinct()
 
@@ -243,9 +200,9 @@ class DepositMoneyView(TransactionCreateMixin):
         )
 
         # recipient_number = account.phone_number
-        # recipient_number = '+93765181256'
-        # sms_body = f'You have successfully deposited  AFN{amount}. Your new balance is  AFN{account.balance}.'
-        # send_sms(recipient_number, sms_body)
+        recipient_number = '+93765181256'
+        sms_body = f'You have successfully deposited {amount} AFN. Your new balance is {account.balance} AFN.'
+        send_sms(recipient_number, sms_body)
 
         messages.success(
             self.request,
@@ -272,9 +229,9 @@ class WithdrawMoneyView(TransactionCreateMixin):
 
 
         # recipient_number = account.user.phone_number
-        # recipient_number = '+93765181256'
-        # sms_body = f'You have successfully withdrawn {amount} AFN. Your new balance is {account.balance} AFN.'
-        # send_sms(recipient_number, sms_body)
+        recipient_number = '+93765181256'
+        sms_body = f'You have successfully withdrawn {amount} AFN. Your new balance is {account.balance} AFN.'
+        send_sms(to=recipient_number, body=sms_body)
 
         messages.success(
             self.request,
@@ -333,7 +290,7 @@ def TransferMoneyView(request):
                  # Send email to sender
                 sender_subject = 'Transfer Notification'
                 sender_message = f'You have transferred {amount} AFN to {recipient_name}\'s account with the Account Number: {recipient_account.account_no}'
-                sender_recipient_list = [request.user.email]  # Sender's email
+                sender_recipient_list = [request.user.email] 
                 sender_name = request.user.first_name
 
                 template_name = "emails/transfer.html"
@@ -344,18 +301,18 @@ def TransferMoneyView(request):
                 email = EmailMessage(
                         sender_subject,
                         sender_email_body,
-                        settings.DEFAULT_FROM_EMAIL,  # Sender's email
-                        sender_recipient_list,  # List of recipient email addresses
+                        settings.DEFAULT_FROM_EMAIL, 
+                        sender_recipient_list,  
                     )
                 
                 email.content_subtype = "html"
 
-                # email.send()
+                email.send()
 
                 # Send email to recipient
                 recipient_subject = 'Received Money Notification'
                 recipient_message = f'You have received {amount} AFN in a transfer from {request.user.first_name} with the Account number: {request.user.account.account_no}.'
-                recipient_recipient_list = [recipient_account.user.email]  # Receiver's email
+                recipient_recipient_list = [recipient_account.user.email]
                 recipient_name = request.user.first_name
 
                 template_name = "emails/receive.html"
@@ -366,20 +323,20 @@ def TransferMoneyView(request):
                 email = EmailMessage(
                         recipient_subject,
                         email_body,
-                        settings.DEFAULT_FROM_EMAIL,  # Sender's email
-                        recipient_recipient_list,  # List of recipient email addresses
+                        settings.DEFAULT_FROM_EMAIL,  
+                        recipient_recipient_list,  
                     )
                 
                 email.content_subtype = "html"
 
-                # email.send()
+                email.send()
                 
 
                 TransferMoney.objects.create(sender=sender_account, recipient=recipient_account, amount=amount)
 
                 messages.success(
                     request,
-                    f'Successfully transferred {amount} AFN to {recipient_name}\'s account'
+                    f'Successfully transferred {amount} AFN to {recipient_account.user.first_name} account'
                 )
 
                 return redirect('transactions:transaction_report')
