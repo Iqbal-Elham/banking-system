@@ -1,9 +1,8 @@
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.mail import send_mail
 from .models import Transaction, TransferMoney
-from .constants import DEPOSIT, WITHDRAWAL, TRANSFER, RECEIVER
+from .constants import DEPOSIT, WITHDRAWAL
 
 from django.utils import timezone
 from django.core.mail import EmailMessage
@@ -25,7 +24,7 @@ def send_transaction_email(sender, instance, created, **kwargs):
             try:
                 subject = 'Your Money Deposit Successfully'
                 message = f'You have deposited {instance.amount} AFN to your account.'
-                recipient_list = [instance.account.user.email]  # Receiver's email
+                recipient_list = [instance.account.user.email] 
                 recipient_name = instance.account.user.first_name
                 current_datetime = timezone.now()
 
@@ -37,13 +36,13 @@ def send_transaction_email(sender, instance, created, **kwargs):
                 email = EmailMessage(
                         subject,
                         email_body,
-                        settings.DEFAULT_FROM_EMAIL,  # Sender's email
-                        recipient_list,  # List of recipient email addresses
+                        settings.DEFAULT_FROM_EMAIL,  
+                        recipient_list, 
                     )
                 
                 email.content_subtype = "html"
 
-                # email.send()
+                email.send()
 
             except TransferMoney.DoesNotExist:
                 pass
@@ -69,7 +68,7 @@ def send_transaction_email(sender, instance, created, **kwargs):
                 
                 email.content_subtype = "html"
 
-                # email.send()
+                email.send()
 
             except TransferMoney.DoesNotExist:
                 pass

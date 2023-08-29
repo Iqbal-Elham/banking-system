@@ -38,7 +38,7 @@ h1 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   place-items: center;
-  grid-gap: 1rem;
+  gap: 3rem;
   padding: 0 1rem;
   margin: 1rem auto;
 }
@@ -77,6 +77,13 @@ h1 {
 
 .icons:hover {
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 992px) {
+  .home-container {
+    gap: 1rem;
+  }
+  
 }
 
 @media screen and (max-width: 768px) {

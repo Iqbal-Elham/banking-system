@@ -1,6 +1,5 @@
 from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
-from django.core.mail import send_mail
 from django.views import View
 from .forms import ContactForm
 from .models import UserMessage 
@@ -11,9 +10,15 @@ from django.template.loader import render_to_string
 from django.conf import settings
 from django.core.mail import EmailMessage
 
+from django.http import Http404
 
 class HomeView(TemplateView):
     template_name = 'home/home.html'
+
+
+def custom_404_view(request):
+    print("helloo")
+    raise Http404("This page does not exist")
 
 
 class ContactUsView(View):
