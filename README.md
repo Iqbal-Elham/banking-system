@@ -62,7 +62,7 @@
 
 ## Live Demo 
 
-[Live Demo](https://iqbalelham.pythonanywhere.com/)
+[Live Demo](http://thebanker.pythonanywhere.com/)
 
 
 ## 💻 Getting Started <a name="getting-started"></a>
