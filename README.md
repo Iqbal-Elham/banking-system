@@ -64,7 +64,7 @@
 
 [Live Demo](http://thebanker.pythonanywhere.com/)
 
-Test Email:    admin@admin.com
+Test Email:    admin@admin.com </br>
 Test Passowrd: Admin123123
 
 ## 💻 Getting Started <a name="getting-started"></a>
